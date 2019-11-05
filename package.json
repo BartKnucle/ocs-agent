@@ -23,6 +23,7 @@
     "feathers-vuex": "^2.0.5",
     "nedb": "^1.8.0",
     "nuxt": "^2.10.2",
+    "selfsigned": "^1.10.7",
     "socket.io-client": "^2.3.0",
     "systeminformation": "^4.14.17"
   },

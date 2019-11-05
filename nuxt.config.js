@@ -7,8 +7,8 @@ module.exports = {
   ** Headers of the page
   */
   env: {
-    localApiURL: process.env.API_URL || `http://localhost:${config.port}`,
-    remoteApiURL: process.env.API_URL || `http://localhost:3001`
+    localApiURL: process.env.API_URL || `https://localhost:${config.port}`,
+    remoteApiURL: process.env.API_URL || `https://localhost:3001`
   },
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
