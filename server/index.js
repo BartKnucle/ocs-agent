@@ -7,6 +7,7 @@ const socketio = require('@feathersjs/socketio')
 const express = require('@feathersjs/express')
 
 const services = require('./services')
+const channels = require('./channels')
 const certif = require('./certif')
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
@@ -34,6 +35,7 @@ async function start () {
 
   app.configure(socketio())
   app.configure(services)
+  app.configure(channels)
 
   const host = app.get('host')
   const port = app.get('port')
