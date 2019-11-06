@@ -12,6 +12,9 @@
           <th scope="col">
             Mac address
           </th>
+           <th scope="col">
+            State
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +27,9 @@
           </td>
           <td>
             {{ item.data.mac }}
+          </td>
+          <td>
+            {{ item.data.operstate }}
           </td>
         </tr>
       </tbody>

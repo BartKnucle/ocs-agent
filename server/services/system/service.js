@@ -57,11 +57,9 @@ class System {
       .then((data) => {
         this.server.create({
           _id: data.data
-        }).catch((err) => {
-          console.log(err)
-        })
+        }).catch(() => {})
       })
-      .catch((err) => {})
+      .catch(() => {})
   }
 }
 
