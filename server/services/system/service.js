@@ -11,38 +11,43 @@ class System {
     this.server = this.app.client.service('devices')
   }
 
-  init () {
-    si.system()
-      .then((data) => {
-        Object.keys(data).map(async (k) => {
-          if (data[k]) {
-            await this.service.update(
-              'sys.' + k,
-              { data: data[k] },
-              { nedb: { upsert: true } }
-            )
-          }
-        })
-      })
-      .catch((err) => {
-        return err
-      })
+  async init () {
+    const sys = await si.system()
+    const os = await si.osInfo()
 
-    si.osInfo()
-      .then((data) => {
-        Object.keys(data).map(async (k) => {
-          if (data[k]) {
-            await this.service.update(
-              'os.' + k,
-              { data: data[k] },
-              { nedb: { upsert: true } }
-            )
-          }
-        })
+    this.service.patch(
+      'sys.uuid',
+      { data: sys.uuid },
+      { nedb: { upsert: true } }
+    ).catch(() => {
+      this.service.create({
+        _id: 'sys.uuid',
+        data: sys.uuid
       })
-      .catch((err) => {
-        return err
+    })
+
+    this.service.patch(
+      'os.hostname',
+      { data: os.hostname },
+      { nedb: { upsert: true } }
+    ).catch(() => {
+      this.service.create({
+        _id: 'os.hostname',
+        data: os.hostname
       })
+    })
+
+    this.service.patch(
+      'os.distro',
+      { data: os.distro },
+      { nedb: { upsert: true } }
+    ).catch(() => {
+      this.service.create({
+        _id: 'os.distro',
+        data: os.distro
+      })
+    })
+
     this.push()
   }
 
@@ -52,11 +57,11 @@ class System {
       .then((data) => {
         this.server.create({
           _id: data.data
+        }).catch((err) => {
+          console.log(err)
         })
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => {})
   }
 }
 
