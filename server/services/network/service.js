@@ -4,6 +4,63 @@ const createModel = require('../../models/network.model')
 const hooks = require('./hooks')
 const si = require('systeminformation')
 
+class Network {
+  constructor(app, service) {
+    this.app = app
+    this.service = service
+  }
+
+  init () {
+    const updateNetwork = () => {
+      si.networkInterfaces()
+        .then(async (data) => {
+          
+          //Deactivate network cards without remove
+          const oldIfaces = await this.service.find()
+          oldIfaces.forEach((iface) => {
+            if (!data.find(x => x.iface === iface._id)) {
+              iface.data.operstate = 'down'
+              this.service.patch(
+                iface._id,
+                { data: iface.data }
+              )
+            }
+          })
+
+          Object.keys(data).map((k) => {
+            if (data[k]) {
+              let ifaceData = {
+                ifaceName: data[k].ifaceName,
+                mac: data[k].mac,
+                ip4: data[k].ip4,
+                ip6: data[k].ip6,
+                internal: data[k].internal,
+                virtual: data[k].virtual,
+                operstate: data[k].operstate
+              }
+
+              this.service.patch(
+                data[k].iface,
+                { data: ifaceData },
+                { nedb: { upsert: true } }
+              ).catch(() => {
+                this.service.create({
+                  _id: data[k].iface,
+                  data: ifaceData
+                })
+              })
+            }
+          })
+        })
+        .catch((err) => {
+          return err
+        })
+    }
+  
+    setInterval(updateNetwork, 5000)
+  }
+}
+
 module.exports = function (app) {
   const Model = createModel(app)
   const paginate = app.get('paginate')
@@ -20,23 +77,6 @@ module.exports = function (app) {
 
   service.hooks(hooks)
 
-  const updateNetwork = () => {
-    si.networkInterfaces()
-      .then((data) => {
-        Object.keys(data).map((k) => {
-          if (data[k]) {
-            service.update(
-              data[k].iface,
-              { data: data[k] },
-              { nedb: { upsert: true }}
-            )
-          }
-        })
-      })
-      .catch((err) => {
-        return err
-      })
-  }
-
-  setInterval(updateNetwork, 1000)
+  app.networkService = new Network(app, service)
+  app.networkService.init()
 }
