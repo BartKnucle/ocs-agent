@@ -11,7 +11,6 @@ export default {
     return {}
   },
   mounted () {
-    console.log(Navigator.credentials)
   }
 }
 </script>

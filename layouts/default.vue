@@ -113,11 +113,6 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Network',
-          to: '/network'
-        },
-        {
-          icon: 'mdi-chart-bubble',
           title: 'System',
           to: '/system'
         },

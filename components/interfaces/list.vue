@@ -12,7 +12,7 @@
           <th scope="col">
             Mac address
           </th>
-           <th scope="col">
+          <th scope="col">
             State
           </th>
         </tr>

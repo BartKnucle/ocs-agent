@@ -30,14 +30,18 @@
         </table>
       </v-card>
     </v-card>
+    <ListInterfaces />
   </section>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
+import ListInterfaces from '~/components/interfaces/list.vue'
 export default {
   name: 'System',
+  components: {
+    ListInterfaces
+  },
   data () {
     return {
       hostname: {
