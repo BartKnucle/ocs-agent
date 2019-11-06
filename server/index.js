@@ -6,6 +6,7 @@ const feathers = require('@feathersjs/feathers')
 const socketio = require('@feathersjs/socketio')
 const express = require('@feathersjs/express')
 
+const client = require('./client')
 const services = require('./services')
 const channels = require('./channels')
 const certif = require('./certif')
@@ -34,6 +35,7 @@ async function start () {
   app.configure(configuration()).use(nuxt.render)
 
   app.configure(socketio())
+  app.configure(client)
   app.configure(services)
   app.configure(channels)
 

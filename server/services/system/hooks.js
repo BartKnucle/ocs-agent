@@ -13,25 +13,8 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [
-    /* context => {
-      let data = {
-        device: context.app.system.id,
-        class: context.id,
-        data: context.data.data
-      }
-      context.app.client.devicesService.create(data)
-      return context;
-    } */],
-    update: [ /* context => {
-      let data = {
-        device: context.app.system.id,
-        class: context.id,
-        data: context.data.data
-      }
-      context.app.client.devicesService.create(data)
-      return context;
-    } */],
+    create: [],
+    update: [],
     patch: [],
     remove: []
   },

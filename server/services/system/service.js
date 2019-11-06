@@ -8,6 +8,7 @@ class System {
   constructor (app, service) {
     this.app = app
     this.service = service
+    this.server = this.app.client.service('devices')
   }
 
   init () {
@@ -41,6 +42,20 @@ class System {
       })
       .catch((err) => {
         return err
+      })
+    this.push()
+  }
+
+  //  Push data to server
+  async push () {
+    this.service.get('sys.uuid')
+      .then((data) => {
+        this.server.create({
+          _id: data.data
+        })
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 }
