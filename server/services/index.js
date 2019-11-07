@@ -1,7 +1,7 @@
 const system = require('./system/service.js')
-const network = require('./network/service.js')
+const interfaces = require('./interfaces/service.js')
 
-module.exports = async function (app) {
+module.exports = function (app) {
   app.configure(system)
-  app.configure(network)
+  app.configure(interfaces)
 }

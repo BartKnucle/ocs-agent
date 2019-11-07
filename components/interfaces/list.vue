@@ -1,7 +1,16 @@
 <template>
   <section>
     <v-list>
-      <v-list-item v-for="(item, _id) in network().data" :key="_id">
+      <v-list-item v-for="(item, _id) in interfaces().data" :key="_id">
+        <v-list-item-action v-if="item.data.default">
+          <v-chip
+            color="yellow"
+            label
+            small
+          >
+            Default
+          </v-chip>
+        </v-list-item-action>
         <v-list-item-content>
           {{ item.data.ifaceName }}
         </v-list-item-content>
@@ -27,7 +36,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import UpDown from '~/components/customs/up_down.vue'
 export default {
-  name: 'Network',
   components: {
     UpDown
   },
@@ -35,13 +43,13 @@ export default {
     return {}
   },
   computed: { // only getters have live queries
-    ...mapGetters('network', { network: 'find' })
+    ...mapGetters('interfaces', { interfaces: 'find' })
   },
   mounted () {
     this.find()
   },
   methods: {
-    ...mapActions('network', { find: 'find' }),
+    ...mapActions('interfaces', { find: 'find' }),
     getStatus (operstate) {
       if (operstate === 'up') {
         return true

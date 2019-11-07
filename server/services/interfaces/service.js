@@ -1,21 +1,21 @@
 // Initializes the `users` service on path `/users`
 const createService = require('feathers-nedb')
-const createModel = require('../../models/network.model')
-const hooks = require('./hooks')
 const si = require('systeminformation')
+const createModel = require('../../models/interfaces.model')
+const hooks = require('./hooks')
 
-class Network {
-  constructor(app, service) {
+class Interfaces {
+  constructor (app, service) {
     this.app = app
     this.service = service
   }
 
   init () {
-    const updateNetwork = () => {
+    const updateInterfaces = async () => {
+      const defaultInterfaceId = await si.networkInterfaceDefault()
       si.networkInterfaces()
         .then(async (data) => {
-          
-          //Deactivate network cards without remove
+          //  Deactivate network cards without remove
           const oldIfaces = await this.service.find()
           oldIfaces.forEach((iface) => {
             if (!data.find(x => x.iface === iface._id)) {
@@ -29,7 +29,7 @@ class Network {
 
           Object.keys(data).map((k) => {
             if (data[k]) {
-              let ifaceData = {
+              const ifaceData = {
                 ifaceName: data[k].ifaceName,
                 mac: data[k].mac,
                 ip4: data[k].ip4,
@@ -37,6 +37,13 @@ class Network {
                 internal: data[k].internal,
                 virtual: data[k].virtual,
                 operstate: data[k].operstate
+              }
+
+              // Set default interface
+              if (data[k].iface === defaultInterfaceId) {
+                ifaceData.default = true
+              } else {
+                ifaceData.default = false
               }
 
               this.service.patch(
@@ -56,27 +63,27 @@ class Network {
           return err
         })
     }
-  
-    setInterval(updateNetwork, 5000)
+
+    setInterval(updateInterfaces, 5000)
   }
 }
 
 module.exports = function (app) {
   const Model = createModel(app)
-  const paginate = app.get('paginate')
+  // const paginate = app.get('paginate')
 
   const options = {
     Model
   }
 
   // Initialize our service with any options it requires
-  app.use('/network', createService(options))
+  app.use('/interfaces', createService(options))
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('network')
+  const service = app.service('interfaces')
 
   service.hooks(hooks)
 
-  app.networkService = new Network(app, service)
+  app.networkService = new Interfaces(app, service)
   app.networkService.init()
 }
