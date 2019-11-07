@@ -15,36 +15,42 @@ class System {
     const sys = await si.system()
     const os = await si.osInfo()
 
+    this.device = {
+      _id: sys.uuid,
+      hostname: os.hostname,
+      distro: os.distro
+    }
+
     this.service.patch(
       'sys.uuid',
-      { data: sys.uuid },
+      { data: this.device._id },
       { nedb: { upsert: true } }
     ).catch(() => {
       this.service.create({
         _id: 'sys.uuid',
-        data: sys.uuid
+        data: this.device._id
       })
     })
 
     this.service.patch(
       'os.hostname',
-      { data: os.hostname },
+      { data: this.device.hostname },
       { nedb: { upsert: true } }
     ).catch(() => {
       this.service.create({
         _id: 'os.hostname',
-        data: os.hostname
+        data: this.device.hostname
       })
     })
 
     this.service.patch(
       'os.distro',
-      { data: os.distro },
+      { data: this.device.distro },
       { nedb: { upsert: true } }
     ).catch(() => {
       this.service.create({
         _id: 'os.distro',
-        data: os.distro
+        data: this.device.distro
       })
     })
 
@@ -52,14 +58,11 @@ class System {
   }
 
   //  Push data to server
-  async push () {
-    this.service.get('sys.uuid')
-      .then((data) => {
-        this.server.create({
-          _id: data.data
-        }).catch(() => {})
+  push () {
+    this.server.create(this.device)
+      .catch(() => {
+        this.server.patch(this.device._id, this.device)
       })
-      .catch(() => {})
   }
 }
 

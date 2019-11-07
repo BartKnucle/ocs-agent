@@ -14,18 +14,23 @@
         <v-list-item-content>
           {{ item.data.mac }}
         </v-list-item-content>
-        <v-list-item-content>
-          {{ item.data.operstate }}
-        </v-list-item-content>
+        <v-list-item-action>
+          <UpDown
+            :up="getStatus(item.data.operstate)"
+          />
+        </v-list-item-action>
       </v-list-item>
     </v-list>
   </section>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
+import UpDown from '~/components/customs/up_down.vue'
 export default {
   name: 'Network',
+  components: {
+    UpDown
+  },
   data () {
     return {}
   },
@@ -36,7 +41,14 @@ export default {
     this.find()
   },
   methods: {
-    ...mapActions('network', { find: 'find' })
+    ...mapActions('network', { find: 'find' }),
+    getStatus (operstate) {
+      if (operstate === 'up') {
+        return true
+      } else {
+        return false
+      }
+    }
   }
 }
 </script>

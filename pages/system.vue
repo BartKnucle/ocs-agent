@@ -1,7 +1,9 @@
 <template>
   <section>
     <v-card>
-      <v-toolbar>
+      <v-toolbar
+        color="primary"
+      >
         <v-toolbar-title class="white--text">
           System
         </v-toolbar-title>
@@ -20,7 +22,9 @@
       <ListSystem />
     </v-card>
     <v-card>
-      <v-toolbar>
+      <v-toolbar
+        color="primary"
+      >
         <v-toolbar-title class="white--text">
           Network interfaces
         </v-toolbar-title>
