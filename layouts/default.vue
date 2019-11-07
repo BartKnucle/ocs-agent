@@ -118,11 +118,6 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Setup',
-          to: '/setup'
-        },
-        {
-          icon: 'mdi-chart-bubble',
           title: 'Sandbox',
           to: '/sandbox'
         }

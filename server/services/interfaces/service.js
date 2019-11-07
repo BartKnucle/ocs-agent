@@ -20,6 +20,7 @@ class Interfaces {
           oldIfaces.forEach((iface) => {
             if (!data.find(x => x.iface === iface._id)) {
               iface.data.operstate = 'down'
+              iface.data.default = false
               this.service.patch(
                 iface._id,
                 { data: iface.data }

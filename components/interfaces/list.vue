@@ -2,15 +2,6 @@
   <section>
     <v-list>
       <v-list-item v-for="(item, _id) in interfaces().data" :key="_id">
-        <v-list-item-action v-if="item.data.default">
-          <v-chip
-            color="yellow"
-            label
-            small
-          >
-            Default
-          </v-chip>
-        </v-list-item-action>
         <v-list-item-content>
           {{ item.data.ifaceName }}
         </v-list-item-content>
@@ -23,11 +14,20 @@
         <v-list-item-content>
           {{ item.data.mac }}
         </v-list-item-content>
-        <v-list-item-action>
+        <v-list-item-icon v-if="item.data.default">
+          <v-chip
+            color="orange"
+            label
+            small
+          >
+            Default
+          </v-chip>
+        </v-list-item-icon>
+        <v-list-item-icon>
           <UpDown
             :up="getStatus(item.data.operstate)"
           />
-        </v-list-item-action>
+        </v-list-item-icon>
       </v-list-item>
     </v-list>
   </section>
