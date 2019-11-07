@@ -1,42 +1,26 @@
 <template>
   <section>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">
-            Name
-          </th>
-          <th scope="col">
-            IpV4
-          </th>
-          <th scope="col">
-            Mac address
-          </th>
-          <th scope="col">
-            State
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, _id) in network().data" :key="_id">
-          <td>
-            {{ item.data.ifaceName }}
-          </td>
-          <td>
-            {{ item.data.ip4 }}
-          </td>
-          <td>
-            {{ item.data.mac }}
-          </td>
-          <td>
-            {{ item.data.operstate }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <v-list>
+      <v-list-item v-for="(item, _id) in network().data" :key="_id">
+        <v-list-item-content>
+          {{ item.data.ifaceName }}
+        </v-list-item-content>
+        <v-list-item-content>
+          {{ item.data.ip4 }}
+        </v-list-item-content>
+        <v-list-item-content>
+          {{ item.data.ip6 }}
+        </v-list-item-content>
+        <v-list-item-content>
+          {{ item.data.mac }}
+        </v-list-item-content>
+        <v-list-item-content>
+          {{ item.data.operstate }}
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </section>
 </template>
-
 <script>
 import { mapActions, mapGetters } from 'vuex'
 

@@ -1,78 +1,60 @@
 <template>
   <section>
     <v-card>
-      <v-system-bar>
-        Hostname: {{ hostname.data }}
-      </v-system-bar>
-      <table>
-        <tr v-for="(item, key) in sys" :key="key">
-          <td>
-            {{ item._id }}
-          </td>
-          <td>
-            {{ item.data }}
-          </td>
-        </tr>
-      </table>
-      <v-card>
-        <v-system-bar>
-          OS: {{ distro.data }}
-        </v-system-bar>
-        <table>
-          <tr v-for="(item, key) in os" :key="key">
-            <td>
-              {{ item._id }}
-            </td>
-            <td>
-              {{ item.data }}
-            </td>
-          </tr>
-        </table>
-      </v-card>
+      <v-toolbar>
+        <v-toolbar-title class="white--text">
+          System
+        </v-toolbar-title>
+        <v-spacer />
+        <v-btn icon>
+          <v-icon>
+            mdi-magnify
+          </v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>
+            mdi-view-module
+          </v-icon>
+        </v-btn>
+      </v-toolbar>
+      <ListSystem />
     </v-card>
-    <ListInterfaces />
+    <v-card>
+      <v-toolbar>
+        <v-toolbar-title class="white--text">
+          Network interfaces
+        </v-toolbar-title>
+        <v-spacer />
+        <v-btn icon>
+          <v-icon>
+            mdi-magnify
+          </v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>
+            mdi-view-module
+          </v-icon>
+        </v-btn>
+      </v-toolbar>
+      <ListInterfaces />
+    </v-card>
   </section>
 </template>
-
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import ListInterfaces from '~/components/interfaces/list.vue'
+import ListSystem from '~/components/system/list.vue'
 export default {
   name: 'System',
   components: {
-    ListInterfaces
+    ListInterfaces,
+    ListSystem
   },
   data () {
-    return {
-      hostname: {
-        _id: '',
-        data: ''
-      },
-      distro: {
-        _id: '',
-        data: ''
-      }
-    }
+    return {}
   },
-  computed: { // only getters have live queries
-    ...mapGetters('system', { system: 'find', get: 'get' }),
-    sys () {
-      return this.system().data.filter(x => x._id.startsWith('sys.') === true)
-    },
-    os () {
-      return this.system().data.filter(x => x._id.startsWith('os.') === true)
-    }
-  },
-  mounted () {
-    this.find()
-      .then(() => {
-        this.hostname = this.get('os.hostname')
-        this.distro = this.get('os.distro')
-      })
-  },
-  methods: {
-    ...mapActions('system', { find: 'find' })
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>
 
