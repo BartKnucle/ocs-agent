@@ -1,15 +1,11 @@
 <template>
   <section>
-    <v-list>
-      <v-list-item v-for="(item, key) in sys" :key="key">
-        <v-list-item-content>
-          {{ item._id }}
-        </v-list-item-content>
-        <v-list-item-content>
-          {{ item.data }}
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <v-data-table
+      :headers="headers"
+      :items="system().data"
+      item-key="_id"
+      hide-default-footer
+    />
   </section>
 </template>
 
@@ -20,6 +16,10 @@ export default {
   components: {},
   data () {
     return {
+      headers: [
+        { value: '_id', text: 'Class' },
+        { value: 'data', text: 'Value' }
+      ],
       hostname: {
         _id: '',
         data: ''

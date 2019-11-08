@@ -1,35 +1,27 @@
 <template>
   <section>
-    <v-list>
-      <v-list-item v-for="(item, _id) in interfaces().data" :key="_id">
-        <v-list-item-content>
-          {{ item.data.ifaceName }}
-        </v-list-item-content>
-        <v-list-item-content>
-          {{ item.data.ip4 }}
-        </v-list-item-content>
-        <v-list-item-content>
-          {{ item.data.ip6 }}
-        </v-list-item-content>
-        <v-list-item-content>
-          {{ item.data.mac }}
-        </v-list-item-content>
-        <v-list-item-icon v-if="item.data.default">
-          <v-chip
-            color="orange"
-            label
-            small
-          >
-            Default
-          </v-chip>
-        </v-list-item-icon>
-        <v-list-item-icon>
-          <UpDown
-            :up="getStatus(item.data.operstate)"
-          />
-        </v-list-item-icon>
-      </v-list-item>
-    </v-list>
+    <v-data-table
+      :headers="headers"
+      :items="interfaces().data"
+      item-key="_id"
+      hide-default-footer
+    >
+      <template v-slot:item.data.default="{ item }">
+        <v-chip
+          v-if="item.data.default"
+          color="orange"
+          label
+          small
+        >
+          Default
+        </v-chip>
+      </template>
+      <template v-slot:item.data.operstate="{ item }">
+        <UpDown
+          :up="getStatus(item.data.operstate)"
+        />
+      </template>
+    </v-data-table>
   </section>
 </template>
 <script>
@@ -40,7 +32,16 @@ export default {
     UpDown
   },
   data () {
-    return {}
+    return {
+      headers: [
+        { value: 'data.default', text: 'Default' },
+        { value: 'data.ifaceName', text: 'Name' },
+        { value: 'data.ip4', text: 'IpV4 Address' },
+        { value: 'data.ip6', text: 'IpV6 Address' },
+        { value: 'data.mac', text: 'Mac Address' },
+        { value: 'data.operstate', text: 'Status' }
+      ]
+    }
   },
   computed: { // only getters have live queries
     ...mapGetters('interfaces', { interfaces: 'find' })
