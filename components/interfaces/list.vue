@@ -1,28 +1,26 @@
 <template>
-  <section>
-    <v-data-table
-      :headers="headers"
-      :items="interfaces().data"
-      item-key="_id"
-      hide-default-footer
-    >
-      <template v-slot:item.data.default="{ item }">
-        <v-chip
-          v-if="item.data.default"
-          color="orange"
-          label
-          small
-        >
-          Default
-        </v-chip>
-      </template>
-      <template v-slot:item.data.operstate="{ item }">
-        <UpDown
-          :up="getStatus(item.data.operstate)"
-        />
-      </template>
-    </v-data-table>
-  </section>
+  <v-data-table
+    :headers="headers"
+    :items="interfaces().data"
+    item-key="_id"
+    hide-default-footer
+  >
+    <template v-slot:item.data.default="{ item }">
+      <v-chip
+        v-if="item.data.default"
+        color="orange"
+        label
+        small
+      >
+        Default
+      </v-chip>
+    </template>
+    <template v-slot:item.data.operstate="{ item }">
+      <UpDown
+        :up="getStatus(item.data.operstate)"
+      />
+    </template>
+  </v-data-table>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
