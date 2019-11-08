@@ -1,8 +1,10 @@
 // Initializes the `users` service on path `/users`
 const createService = require('feathers-nedb')
 const si = require('systeminformation')
+const os = require('os')
 const createModel = require('../../models/interfaces.model')
 const hooks = require('./hooks')
+
 
 class Interfaces {
   constructor (app, service) {
@@ -11,6 +13,7 @@ class Interfaces {
   }
 
   init () {
+    const nodeInterfaces = os.networkInterfaces()
     const updateInterfaces = async () => {
       const defaultInterfaceId = await si.networkInterfaceDefault()
       si.networkInterfaces()
@@ -34,7 +37,9 @@ class Interfaces {
                 ifaceName: data[k].ifaceName,
                 mac: data[k].mac,
                 ip4: data[k].ip4,
+                ip4_subnet: nodeInterfaces[data[k].iface].find(x => x.address === data[k].ip4).netmask,
                 ip6: data[k].ip6,
+                ip6_subnet: nodeInterfaces[data[k].iface].find(x => x.address === data[k].ip6).netmask,
                 internal: data[k].internal,
                 virtual: data[k].virtual,
                 operstate: data[k].operstate

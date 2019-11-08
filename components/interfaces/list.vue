@@ -35,7 +35,9 @@ export default {
         { value: 'data.default', text: 'Default' },
         { value: 'data.ifaceName', text: 'Name' },
         { value: 'data.ip4', text: 'IpV4 Address' },
+        { value: 'data.ip4_subnet', text: 'IpV4 Subnet' },
         { value: 'data.ip6', text: 'IpV6 Address' },
+        { value: 'data.ip6_subnet', text: 'IpV6 Subnet' },
         { value: 'data.mac', text: 'Mac Address' },
         { value: 'data.operstate', text: 'Status' }
       ]
