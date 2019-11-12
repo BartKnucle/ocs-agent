@@ -2,7 +2,7 @@ const colors = require('vuetify/es5/util/colors').default
 const config = require('./server/config/default.json')
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
