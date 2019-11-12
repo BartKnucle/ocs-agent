@@ -1,15 +1,15 @@
-// Initializes the `users` service on path `/users`
+const os = require('os')
 const createService = require('feathers-nedb')
 const si = require('systeminformation')
-const os = require('os')
+const nc = require('network-calculator')
 const createModel = require('../../models/interfaces.model')
 const hooks = require('./hooks')
-
 
 class Interfaces {
   constructor (app, service) {
     this.app = app
     this.service = service
+    this.subnets = this.app.client.service('subnets')
   }
 
   init () {
@@ -62,6 +62,8 @@ class Interfaces {
                   data: ifaceData
                 })
               })
+
+              this.push()
             }
           })
         })
@@ -71,6 +73,25 @@ class Interfaces {
     }
 
     setInterval(updateInterfaces, 5000)
+  }
+
+  // Push data to server
+  push () {
+    this.service.find().then((data) => {
+      const subnet = data.find(x => x.data.default === true)
+      if (subnet) {
+        const network = nc(subnet.data.ip4, subnet.data.ip4_subnet)
+        const data = {
+          _id: network.network + '/' + network.bitmask,
+          data: network
+        }
+
+        this.subnets.create(data)
+          .catch(() => {
+            this.subnets.patch(data._id, data)
+          })
+      }
+    })
   }
 }
 
