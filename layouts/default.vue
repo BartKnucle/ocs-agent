@@ -102,22 +102,22 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-windows',
           title: 'Software',
           to: '/software'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-arrow-up-bold-circle',
           title: 'Updates',
           to: '/updates'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-laptop',
           title: 'System',
           to: '/system'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-play',
           title: 'Sandbox',
           to: '/sandbox'
         }
@@ -125,7 +125,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'OCM Agent'
     }
   }
 }
