@@ -1,6 +1,7 @@
 // Initializes the `users` service on path `/users`
 const createService = require('feathers-nedb')
 const si = require('systeminformation')
+const defaultGateway = require('default-gateway')
 const createModel = require('../../models/system.model')
 const hooks = require('./hooks')
 
@@ -12,49 +13,87 @@ class System {
   }
 
   async init () {
-    const sys = await si.system()
-    const os = await si.osInfo()
+    const updateSystem = async () => {
+      const sys = await si.system()
+      const os = await si.osInfo()
 
-    this.device = {
-      _id: sys.uuid,
-      hostname: os.hostname,
-      distro: os.distro
+      this.device = {
+        _id: sys.uuid,
+        hostname: os.hostname,
+        distro: os.distro,
+      }
+
+      try {
+        this.device.gatewayV4 = defaultGateway.v4.sync().gateway
+      } catch (error) {
+        this.device.gatewayV4 = ''
+      }
+
+      try {
+        this.device.gatewayV6 = defaultGateway.v6.sync().gateway
+      } catch (error) {
+        this.device.gatewayV6 = ''
+      }
+
+      this.service.patch(
+        'sys.uuid',
+        { data: this.device._id },
+        { nedb: { upsert: true } }
+      ).catch(() => {
+        this.service.create({
+          _id: 'sys.uuid',
+          data: this.device._id
+        })
+      })
+
+      this.service.patch(
+        'os.hostname',
+        { data: this.device.hostname },
+        { nedb: { upsert: true } }
+      ).catch(() => {
+        this.service.create({
+          _id: 'os.hostname',
+          data: this.device.hostname
+        })
+      })
+
+      this.service.patch(
+        'os.distro',
+        { data: this.device.distro },
+        { nedb: { upsert: true } }
+      ).catch(() => {
+        this.service.create({
+          _id: 'os.distro',
+          data: this.device.distro
+        })
+      })
+
+      this.service.patch(
+        'net.gatewayV4',
+        { data: this.device.gatewayV4 },
+        { nedb: { upsert: true } }
+      ).catch(() => {
+        this.service.create({
+          _id: 'net.gatewayV4',
+          data: this.device.gatewayV4
+        })
+      })
+
+      this.service.patch(
+        'net.gatewayV6',
+        { data: this.device.gatewayV6 },
+        { nedb: { upsert: true } }
+      ).catch(() => {
+        this.service.create({
+          _id: 'net.gatewayV6',
+          data: this.device.gatewayV6
+        })
+      })
+
+      this.push()
     }
 
-    this.service.patch(
-      'sys.uuid',
-      { data: this.device._id },
-      { nedb: { upsert: true } }
-    ).catch(() => {
-      this.service.create({
-        _id: 'sys.uuid',
-        data: this.device._id
-      })
-    })
-
-    this.service.patch(
-      'os.hostname',
-      { data: this.device.hostname },
-      { nedb: { upsert: true } }
-    ).catch(() => {
-      this.service.create({
-        _id: 'os.hostname',
-        data: this.device.hostname
-      })
-    })
-
-    this.service.patch(
-      'os.distro',
-      { data: this.device.distro },
-      { nedb: { upsert: true } }
-    ).catch(() => {
-      this.service.create({
-        _id: 'os.distro',
-        data: this.device.distro
-      })
-    })
-
-    this.push()
+    setInterval(updateSystem, 5000)
   }
 
   //  Push data to server

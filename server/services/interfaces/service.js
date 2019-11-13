@@ -77,6 +77,7 @@ class Interfaces {
 
   // Push data to server
   push () {
+    // Push default subnet
     this.service.find().then((data) => {
       const subnet = data.find(x => x.data.default === true)
       if (subnet) {
@@ -92,6 +93,8 @@ class Interfaces {
           })
       }
     })
+
+    // Push default gateway
   }
 }
 
