@@ -7,7 +7,7 @@ module.exports = {
   ** Headers of the page
   */
   env: {
-    localApiURL: process.env.API_URL || `https://localhost:${config.port}`,
+    localApiURL: process.env.API_URL,
     remoteApiURL: config.remoteApiURL
   },
   head: {
