@@ -2,7 +2,7 @@
   <section>
     <v-data-table
       :headers="headers"
-      :items="system().data"
+      :items="device().data"
       item-key="_id"
       hide-default-footer
     />
@@ -12,7 +12,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'System',
   components: {},
   data () {
     return {
@@ -31,23 +30,13 @@ export default {
     }
   },
   computed: { // only getters have live queries
-    ...mapGetters('system', { system: 'find', get: 'get' }),
-    sys () {
-      return this.system().data.filter(x => x._id.startsWith('sys.') === true)
-    },
-    os () {
-      return this.system().data.filter(x => x._id.startsWith('os.') === true)
-    }
+    ...mapGetters('device', { device: 'find', get: 'get' })
   },
   mounted () {
     this.find()
-      .then(() => {
-        this.hostname = this.get('os.hostname')
-        this.distro = this.get('os.distro')
-      })
   },
   methods: {
-    ...mapActions('system', { find: 'find' })
+    ...mapActions('device', { find: 'find' })
   }
 }
 </script>

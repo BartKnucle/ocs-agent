@@ -5,7 +5,7 @@
         color="primary"
       >
         <v-toolbar-title class="white--text">
-          System
+          Device
         </v-toolbar-title>
         <v-spacer />
         <v-btn icon>
@@ -19,7 +19,7 @@
           </v-icon>
         </v-btn>
       </v-toolbar>
-      <ListSystem />
+      <ListDevice />
     </v-card>
     <v-card>
       <v-toolbar
@@ -46,12 +46,11 @@
 </template>
 <script>
 import ListInterfaces from '~/components/interfaces/list.vue'
-import ListSystem from '~/components/system/list.vue'
+import ListDevice from '~/components/device/list.vue'
 export default {
-  name: 'System',
   components: {
     ListInterfaces,
-    ListSystem
+    ListDevice
   },
   data () {
     return {}

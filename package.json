@@ -20,6 +20,7 @@
     "@feathersjs/socketio-client": "^4.3.10",
     "cross-env": "^6.0.3",
     "default-gateway": "^5.0.4",
+    "fast-deep-equal": "^2.0.1",
     "feathers-nedb": "^5.1.0",
     "feathers-vuex": "^2.0.5",
     "nedb": "^1.8.0",

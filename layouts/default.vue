@@ -113,8 +113,8 @@ export default {
         },
         {
           icon: 'mdi-laptop',
-          title: 'System',
-          to: '/system'
+          title: 'Device',
+          to: '/device'
         },
         {
           icon: 'mdi-play',

@@ -1,7 +1,7 @@
-const system = require('./system/service.js')
-const interfaces = require('./interfaces/service.js')
+const device = require('./device')
+const interfaces = require('./interfaces')
 
 module.exports = function (app) {
-  app.configure(system)
+  app.configure(device)
   app.configure(interfaces)
 }
