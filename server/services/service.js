@@ -69,15 +69,13 @@ module.exports = class Service {
     this.service.patch(
       key,
       {
-        data: value,
-        updated: new Date()
+        data: value
       },
       { nedb: { upsert: true } }
     ).catch(() => {
       this.service.create({
         _id: key,
-        data: value,
-        updated: new Date()
+        data: value
       })
     })
 
