@@ -15,6 +15,9 @@
         Default
       </v-chip>
     </template>
+    <template v-slot:item.updated="{ item }">
+      {{ new Date(item.updated).toLocaleString() }}
+    </template>
     <template v-slot:item.data.operstate="{ item }">
       <UpDown
         :up="getStatus(item.data.operstate)"
@@ -39,7 +42,8 @@ export default {
         { value: 'data.ip6', text: 'IpV6 Address' },
         { value: 'data.ip6_subnet', text: 'IpV6 Subnet' },
         { value: 'data.mac', text: 'Mac Address' },
-        { value: 'data.operstate', text: 'Status' }
+        { value: 'data.operstate', text: 'Status' },
+        { value: 'updated', text: 'Updated' }
       ]
     }
   },

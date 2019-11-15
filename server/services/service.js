@@ -8,6 +8,7 @@ module.exports = class Service {
     this.app = app
     this.name = this.constructor.name.toLowerCase()
     this.app[this.name] = this
+    this.log = app.logger.log
 
     //  Default model
     this.model = new NeDB({
@@ -58,7 +59,6 @@ module.exports = class Service {
   }
 
   onDataDelete (target, key) {
-    this.log(`Delete ${key}`)
     this.delete(target, key)
     delete target[key]
     return true
@@ -85,16 +85,8 @@ module.exports = class Service {
   // Delete value from db
   delete (target, key) {
     this.service.remove(key)
-      .catch((err) => {
-        this.log(err)
-      })
   }
 
   // Push data to server
   push () {}
-
-  // Logger
-  log (err) {
-    console.log(err)
-  }
 }

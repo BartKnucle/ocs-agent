@@ -7,17 +7,6 @@
         <v-toolbar-title class="white--text">
           Device
         </v-toolbar-title>
-        <v-spacer />
-        <v-btn icon>
-          <v-icon>
-            mdi-magnify
-          </v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>
-            mdi-view-module
-          </v-icon>
-        </v-btn>
       </v-toolbar>
       <ListDevice />
     </v-card>
@@ -28,29 +17,30 @@
         <v-toolbar-title class="white--text">
           Network interfaces
         </v-toolbar-title>
-        <v-spacer />
-        <v-btn icon>
-          <v-icon>
-            mdi-magnify
-          </v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>
-            mdi-view-module
-          </v-icon>
-        </v-btn>
       </v-toolbar>
       <ListInterfaces />
+    </v-card>
+    <v-card>
+      <v-toolbar
+        color="primary"
+      >
+        <v-toolbar-title class="white--text">
+          Logs
+        </v-toolbar-title>
+      </v-toolbar>
+      <ListLogs />
     </v-card>
   </section>
 </template>
 <script>
 import ListInterfaces from '~/components/interfaces/list.vue'
 import ListDevice from '~/components/device/list.vue'
+import ListLogs from '~/components/logger/list.vue'
 export default {
   components: {
     ListInterfaces,
-    ListDevice
+    ListDevice,
+    ListLogs
   },
   data () {
     return {}

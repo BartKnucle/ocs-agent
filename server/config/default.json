@@ -2,5 +2,6 @@
   "host": "localhost",
   "port": 3000,
   "nedb": "../data/db/",
-  "remoteApiURL": "https://localhost:3001"
+  "remoteApiURL": "https://localhost:3001",
+  "logLevel": 2
 }

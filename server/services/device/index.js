@@ -22,7 +22,10 @@ class Device extends Service {
         this.data._id = data.uuid
       })
       .catch((err) => {
-        this.log(err)
+        this.log({
+          level: 2,
+          text: `Cannot get system ID: ${err}`
+        })
       })
 
     si.osInfo()
@@ -31,7 +34,10 @@ class Device extends Service {
         this.data.distro = data.distro
       })
       .catch((err) => {
-        this.log(err)
+        this.log({
+          level: 2,
+          text: `Cannot get system information: ${err}`
+        })
       })
 
     defaultGateway.v4()
@@ -39,7 +45,10 @@ class Device extends Service {
         this.data.gatewayV4 = data.gateway
       })
       .catch((err) => {
-        this.log(err)
+        this.log({
+          level: 1,
+          text: `Cannot get V4 gateway: ${err}`
+        })
       })
 
     defaultGateway.v6()
@@ -47,7 +56,10 @@ class Device extends Service {
         this.data.gatewayV6 = data.gateway
       })
       .catch((err) => {
-        this.log(err)
+        this.log({
+          level: 1,
+          text: `Cannot get V6 gateway: ${err}`
+        })
       })
 
     this.push()

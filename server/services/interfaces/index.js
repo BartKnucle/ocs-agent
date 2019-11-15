@@ -1,6 +1,4 @@
-const os = require('os')
 const si = require('systeminformation')
-const nc = require('network-calculator')
 const Service = require('../service')
 
 class Interfaces extends Service {
@@ -48,77 +46,25 @@ class Interfaces extends Service {
                 })
               })
               .catch((err) => {
-                this.log(err)
+                this.log({
+                  level: 2,
+                  text: `Cannot default interface: ${err}`
+                })
               })
           })
           .catch((err) => {
-            this.log(err)
+            this.log({
+              level: 2,
+              text: `Cannot network interfaces: ${err}`
+            })
           })
       })
       .catch((err) => {
-        this.log(err)
-      })
-    /*  const nodeInterfaces = os.networkInterfaces()
-    si.networkInterfaceDefault()
-      .then((data) => {
-        const defaultInterfaceId = data
-        this.log(defaultInterfaceId)
-      })
-    si.networkInterfaces()
-      .then(async (data) => {
-        this.log(data)
-        //  Deactivate network cards without remove
-        const oldIfaces = await this.service.find()
-        oldIfaces.forEach((iface) => {
-          if (!data.find(x => x.iface === iface._id)) {
-            iface.data.operstate = 'down'
-            iface.data.default = false
-            this.service.patch(
-              iface._id,
-              { data: iface.data }
-            )
-          }
-        })
-
-        Object.keys(data).map((k) => {
-          if (data[k]) {
-            const ifaceData = {
-              ifaceName: data[k].ifaceName,
-              mac: data[k].mac,
-              ip4: data[k].ip4,
-              ip4_subnet: nodeInterfaces[data[k].iface].find(x => x.address === data[k].ip4).netmask,
-              ip6: data[k].ip6,
-              ip6_subnet: nodeInterfaces[data[k].iface].find(x => x.address === data[k].ip6).netmask,
-              internal: data[k].internal,
-              virtual: data[k].virtual,
-              operstate: data[k].operstate
-            }
-
-            // Set default interface
-            if (data[k].iface === defaultInterfaceId) {
-              ifaceData.default = true
-            } else {
-              ifaceData.default = false
-            }
-
-            this.service.patch(
-              data[k].iface,
-              { data: ifaceData },
-              { nedb: { upsert: true } }
-            ).catch(() => {
-              this.service.create({
-                _id: data[k].iface,
-                data: ifaceData
-              })
-            })
-
-            this.push()
-          }
+        this.log({
+          level: 2,
+          text: `Cannot network interfaces from database: ${err}`
         })
       })
-      .catch((err) => {
-        return err
-      }) */
   }
 
   // Push data to server

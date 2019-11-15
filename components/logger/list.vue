@@ -2,11 +2,10 @@
   <section>
     <v-data-table
       :headers="headers"
-      :items="device().data"
+      :items="logger().data"
       item-key="_id"
-      hide-default-footer
     >
-      <template v-slot:item.updated="{ item }">
+      <template v-slot:item._id="{ item }">
         {{ new Date(item.updated).toLocaleString() }}
       </template>
     </v-data-table>
@@ -20,9 +19,10 @@ export default {
   data () {
     return {
       headers: [
-        { value: '_id', text: 'Class' },
-        { value: 'data', text: 'Value' },
-        { value: 'updated', text: 'Updated' }
+        { value: '_id', text: 'Date' },
+        { value: 'data.level', text: 'Level' },
+        { value: 'data.service', text: 'Service' },
+        { value: 'data.text', text: 'Error' }
       ],
       hostname: {
         _id: '',
@@ -35,13 +35,13 @@ export default {
     }
   },
   computed: { // only getters have live queries
-    ...mapGetters('device', { device: 'find', get: 'get' })
+    ...mapGetters('logger', { logger: 'find', get: 'get' })
   },
   mounted () {
     this.find()
   },
   methods: {
-    ...mapActions('device', { find: 'find' })
+    ...mapActions('logger', { find: 'find' })
   }
 }
 </script>
