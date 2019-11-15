@@ -80,11 +80,14 @@ module.exports = class Service {
         updated: new Date()
       })
     })
+
+    this.push()
   }
 
   // Delete value from db
   delete (target, key) {
     this.service.remove(key)
+    this.push()
   }
 
   // Push data to server

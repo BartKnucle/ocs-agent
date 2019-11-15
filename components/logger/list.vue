@@ -5,6 +5,11 @@
       :items="logger().data"
       item-key="_id"
     >
+      <template v-slot:item.data.level="{ item }">
+        <ErrorType
+          :level="item.data.level"
+        />
+      </template>
       <template v-slot:item._id="{ item }">
         {{ new Date(item.updated).toLocaleString() }}
       </template>
@@ -14,13 +19,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import ErrorType from '~/components/customs/error_type.vue'
 export default {
-  components: {},
+  components: {
+    ErrorType
+  },
   data () {
     return {
       headers: [
-        { value: '_id', text: 'Date' },
         { value: 'data.level', text: 'Level' },
+        { value: '_id', text: 'Date' },
         { value: 'data.service', text: 'Service' },
         { value: 'data.text', text: 'Error' }
       ],
