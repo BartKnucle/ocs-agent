@@ -6,9 +6,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [updated()],
     update: [updated()],
-    patch: [],
+    patch: [updated()],
     remove: []
   },
 

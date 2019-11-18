@@ -1,4 +1,5 @@
 const si = require('systeminformation')
+const defaultGateway = require('default-gateway')
 const Service = require('../service')
 
 class Interfaces extends Service {
@@ -40,6 +41,19 @@ class Interfaces extends Service {
                   // Check if network interface is no more preset
                   if (rest.iface === defaultIface) {
                     rest.default = true
+                    // Update device IP data
+                    this.app.device.data.ip4 = iface.ip4
+                    // Get the default gateway
+                    defaultGateway.v4()
+                      .then((data) => {
+                        this.app.device.data.gatewayV4 = data.gateway
+                      })
+                      .catch((err) => {
+                        this.log({
+                          level: 1,
+                          text: `Cannot get V4 gateway: ${err}`
+                        })
+                      })
                   }
 
                   this.data[iface.iface] = rest
@@ -66,28 +80,6 @@ class Interfaces extends Service {
         })
       })
   }
-
-  // Push data to server
-  /* push () {
-    // Push default subnet
-    this.service.find().then((data) => {
-      const subnet = data.find(x => x.data.default === true)
-      if (subnet) {
-        const network = nc(subnet.data.ip4, subnet.data.ip4_subnet)
-        const data = {
-          _id: network.network + '/' + network.bitmask,
-          data: network
-        }
-
-        this.subnets.create(data)
-          .catch(() => {
-            this.subnets.patch(data._id, data)
-          })
-      }
-    })
-
-    // Push default gateway
-  } */
 }
 
 module.exports = function (app) {

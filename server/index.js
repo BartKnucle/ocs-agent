@@ -35,7 +35,7 @@ async function start () {
   app.configure(configuration()).use(nuxt.render)
 
   app.configure(socketio())
-  app.hooks = require('./app.hooks')
+  app.hooks(require('./app.hooks'))
   app.configure(client)
   app.configure(services)
   app.configure(channels)

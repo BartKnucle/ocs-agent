@@ -1,5 +1,4 @@
 const si = require('systeminformation')
-const defaultGateway = require('default-gateway')
 const Service = require('../service')
 
 class Device extends Service {
@@ -14,10 +13,10 @@ class Device extends Service {
     super.init()
   }
 
-  fill () {
+  async fill () {
     super.fill()
 
-    si.system()
+    await si.system()
       .then((data) => {
         this.data._id = data.uuid
 
@@ -31,28 +30,6 @@ class Device extends Service {
             this.log({
               level: 2,
               text: `Cannot get system information: ${err}`
-            })
-          })
-
-        defaultGateway.v4()
-          .then((data) => {
-            this.data.gatewayV4 = data.gateway
-          })
-          .catch((err) => {
-            this.log({
-              level: 1,
-              text: `Cannot get V4 gateway: ${err}`
-            })
-          })
-
-        defaultGateway.v6()
-          .then((data) => {
-            this.data.gatewayV6 = data.gateway
-          })
-          .catch((err) => {
-            this.log({
-              level: 1,
-              text: `Cannot get V6 gateway: ${err}`
             })
           })
       })
@@ -73,7 +50,7 @@ class Device extends Service {
   }
 }
 
-module.exports = function (app) {
+module.exports = async (app) => {
   const device = new Device(app)
-  device.init()
+  await device.init()
 }

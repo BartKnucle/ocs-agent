@@ -2,8 +2,8 @@ const logger = require('./logger')
 const device = require('./device')
 const interfaces = require('./interfaces')
 
-module.exports = function (app) {
+module.exports = async (app) => {
   app.configure(logger)
-  app.configure(device)
+  await app.configure(device)
   app.configure(interfaces)
 }
