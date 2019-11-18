@@ -31,15 +31,7 @@ export default {
         { value: '_id', text: 'Date' },
         { value: 'data.service', text: 'Service' },
         { value: 'data.text', text: 'Error' }
-      ],
-      hostname: {
-        _id: '',
-        data: ''
-      },
-      distro: {
-        _id: '',
-        data: ''
-      }
+      ]
     }
   },
   computed: { // only getters have live queries
@@ -49,7 +41,12 @@ export default {
     this.find()
   },
   methods: {
-    ...mapActions('logger', { find: 'find' })
+    ...mapActions('logger', { find: 'find', remove: 'remove' }),
+    clear () {
+      this.remove(null, {
+        query: {}
+      })
+    }
   }
 }
 </script>

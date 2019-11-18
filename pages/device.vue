@@ -27,8 +27,17 @@
         <v-toolbar-title class="white--text">
           Logs
         </v-toolbar-title>
+        <v-spacer />
+        <v-btn
+          icon
+          @click="$refs.ListLogs.clear()"
+        >
+          <v-icon>
+            mdi-delete
+          </v-icon>
+        </v-btn>
       </v-toolbar>
-      <ListLogs />
+      <ListLogs ref="ListLogs" />
     </v-card>
   </section>
 </template>
