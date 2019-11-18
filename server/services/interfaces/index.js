@@ -1,3 +1,4 @@
+const os = require('os')
 const si = require('systeminformation')
 const defaultGateway = require('default-gateway')
 const Service = require('../service')
@@ -30,6 +31,9 @@ class Interfaces extends Service {
               }
             })
 
+            // Get the os library interfaces data
+            const osNetworkInterfaces = os.networkInterfaces()
+
             //  Get the default interface
             si.networkInterfaceDefault()
               .then((defaultIface) => {
@@ -38,11 +42,19 @@ class Interfaces extends Service {
                   //  filter interface fields
                   const { duplex, speed, mtu, carrierChanges, ...rest } = iface
 
-                  // Check if network interface is no more preset
+                  //  Add the os library informations
+                  const osInterfaceV4 = osNetworkInterfaces[iface.iface].find(x => x.address === iface.ip4)
+                  iface.ip4_subnet = osInterfaceV4.cidr
+
+                  const osInterfaceV6 = osNetworkInterfaces[iface.iface].find(x => x.address === iface.ip6)
+                  iface.ip6_subnet = osInterfaceV6.cidr
+
+                  // Check if this it the default interface
                   if (rest.iface === defaultIface) {
                     rest.default = true
                     // Update device IP data
                     this.app.device.data.ip4 = iface.ip4
+                    this.app.device.data.ip4_subnet = iface.ip4_subnet
                     // Get the default gateway
                     defaultGateway.v4()
                       .then((data) => {
