@@ -34,8 +34,8 @@ class Interfaces extends Service {
             // Get the os library interfaces data
             const osNetworkInterfaces = os.networkInterfaces()
 
-            //  Get the default interface
-            si.networkInterfaceDefault()
+            //  Get the default gateway
+            defaultGateway.v4()
               .then((defaultIface) => {
                 //  Update data
                 interfaces.forEach((iface) => {
@@ -50,22 +50,13 @@ class Interfaces extends Service {
                   iface.ip6_subnet = osInterfaceV6.cidr
 
                   // Check if this it the default interface
-                  if (rest.iface === defaultIface) {
+                  if (rest.iface === defaultIface.interface) {
                     rest.default = true
                     // Update device IP data
                     this.app.device.data.ip4 = iface.ip4
                     this.app.device.data.ip4_subnet = iface.ip4_subnet
+                    this.app.device.data.gatewayV4 = defaultIface.gateway
                     // Get the default gateway
-                    defaultGateway.v4()
-                      .then((data) => {
-                        this.app.device.data.gatewayV4 = data.gateway
-                      })
-                      .catch((err) => {
-                        this.log({
-                          level: 1,
-                          text: `Cannot get V4 gateway: ${err}`
-                        })
-                      })
                   }
 
                   this.data[iface.iface] = rest
