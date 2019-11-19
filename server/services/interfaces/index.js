@@ -8,7 +8,6 @@ class Interfaces extends Service {
     super(app)
     this.update = 5000
     this.remote = this.app.client.service('subnets')
-    this.hooks = require('./hooks')
   }
 
   init () {

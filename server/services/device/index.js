@@ -6,7 +6,6 @@ class Device extends Service {
     super(app)
     this.update = 5000
     this.remote = this.app.client.service('devices')
-    this.hooks = require('./hooks')
   }
 
   init () {

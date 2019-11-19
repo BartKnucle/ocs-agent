@@ -11,6 +11,38 @@ module.exports = class Service {
     this.log = app.logger.log
     this.multi = true
 
+    this.hooks = {
+      before: {
+        all: [],
+        find: [],
+        get: [],
+        create: [],
+        update: [],
+        patch: [],
+        remove: []
+      },
+
+      after: {
+        all: [],
+        find: [],
+        get: [],
+        create: [],
+        update: [],
+        patch: [],
+        remove: []
+      },
+
+      error: {
+        all: [],
+        find: [],
+        get: [],
+        create: [],
+        update: [],
+        patch: [],
+        remove: []
+      }
+    }
+
     //  Default model
     this.model = new NeDB({
       filename: path.join(this.app.get('nedb'), this.name + '.db'),

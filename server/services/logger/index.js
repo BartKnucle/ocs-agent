@@ -1,11 +1,6 @@
 const Service = require('../service')
 
 class Logger extends Service {
-  constructor (app) {
-    super(app)
-    this.hooks = require('./hooks')
-  }
-
   init () {
     super.init()
   }
