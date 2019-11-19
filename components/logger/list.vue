@@ -19,7 +19,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ErrorType from '~/components/customs/error_type.vue'
+import ErrorType from '~/components/customs/ErrorType.vue'
 export default {
   components: {
     ErrorType

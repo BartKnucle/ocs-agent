@@ -10,6 +10,7 @@
 <script>
 
 export default {
+  name: 'ErrorType',
   props: {
     level: {
       type: Number,
@@ -28,8 +29,6 @@ export default {
           return 'orange'
         case 2:
           return 'red'
-        default:
-          break
       }
     },
     text () {
@@ -40,8 +39,6 @@ export default {
           return 'Warning'
         case 2:
           return 'Error'
-        default:
-          break
       }
     }
   }
