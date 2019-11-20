@@ -7,45 +7,26 @@ const localVue = createLocalVue()
 
 
 describe('components/customs/UpDown', () => {
-  let vuetify
-
-  beforeEach(() => {
-    vuetify = new Vuetify()
-    Vue.use(Vuetify)
+  let vuetify = new Vuetify()
+  Vue.use(Vuetify)
+  let wrapper = mount(UpDown, {
+    localVue,
+    vuetify
   })
 
-  test('is a Vue instance', () => {
-    const wrapper = mount(UpDown, {
-      localVue,
-      vuetify,
-      propsData: {
-        up: true,
-        }
-    })
+  it('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
-  test('Is green', () => {
-    const wrapper = mount(UpDown, {
-      localVue,
-      vuetify,
-      propsData: {
-        up: true,
-        }
-    })
+  it('is UP', () => {
+    wrapper.setProps({ up: true })
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('UP')
     expect(chip.classes()).toContain('green')
   })
 
-  test('Is red', () => {
-    const wrapper = mount(UpDown, {
-      localVue,
-      vuetify,
-      propsData: {
-        up: false,
-        }
-    })
+  it('is DOWN', () => {
+    wrapper.setProps({ up: false })
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('DOWN')
     expect(chip.classes()).toContain('red')

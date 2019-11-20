@@ -2,7 +2,7 @@
   <section>
     <v-data-table
       :headers="headers"
-      :items="logger().data"
+      :items="logger"
       item-key="_id"
     >
       <template v-slot:item.data.level="{ item }">
@@ -18,11 +18,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import ErrorType from '~/components/customs/ErrorType.vue'
 export default {
   components: {
     ErrorType
+  },
+  props: {
+    logger: {
+      type: Array,
+      default: () => { return [] }
+    }
   },
   data () {
     return {
@@ -34,18 +39,11 @@ export default {
       ]
     }
   },
-  computed: { // only getters have live queries
-    ...mapGetters('logger', { logger: 'find', get: 'get' })
-  },
-  mounted () {
-    this.find()
-  },
+  computed: {},
+  mounted () {},
   methods: {
-    ...mapActions('logger', { find: 'find', remove: 'remove' }),
     clear () {
-      this.remove(null, {
-        query: {}
-      })
+      this.$emit('clear')
     }
   }
 }

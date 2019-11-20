@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="interfaces().data"
+    :items="ifaces"
     item-key="_id"
     hide-default-footer
   >
@@ -26,11 +26,16 @@
   </v-data-table>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import UpDown from '~/components/customs/UpDown.vue'
 export default {
   components: {
     UpDown
+  },
+  props: {
+    ifaces: {
+      type: Array,
+      default: () => { return [] }
+    }
   },
   data () {
     return {
@@ -47,14 +52,9 @@ export default {
       ]
     }
   },
-  computed: { // only getters have live queries
-    ...mapGetters('interfaces', { interfaces: 'find' })
-  },
-  mounted () {
-    this.find()
-  },
+  computed: {},
+  mounted () {},
   methods: {
-    ...mapActions('interfaces', { find: 'find' }),
     getStatus (operstate) {
       if (operstate === 'up') {
         return true

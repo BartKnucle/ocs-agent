@@ -7,58 +7,33 @@ const localVue = createLocalVue()
 
 
 describe('components/customs/ErrorType', () => {
-  let vuetify
-
-  beforeEach(() => {
-    vuetify = new Vuetify()
-    Vue.use(Vuetify)
+  let vuetify = new Vuetify()
+  Vue.use(Vuetify)
+  let wrapper = mount(ErrorType, {
+    localVue,
+    vuetify
   })
 
-  test('is a Vue instance', () => {
-    const wrapper = mount(ErrorType, {
-      localVue,
-      vuetify,
-      propsData: {
-        level: 0,
-        }
-    })
+  it('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
-  test('Is yellow', () => {
-    const wrapper = mount(ErrorType, {
-      localVue,
-      vuetify,
-      propsData: {
-        level: 0,
-        }
-    })
+  it('is Info', () => {
+    wrapper.setProps({ level: 0 })
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Info')
     expect(chip.classes()).toContain('yellow')
   })
 
-  test('Is orange', () => {
-    const wrapper = mount(ErrorType, {
-      localVue,
-      vuetify,
-      propsData: {
-        level: 1,
-        }
-    })
+  test('is Warning', () => {
+    wrapper.setProps({ level: 1 })
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Warning')
     expect(chip.classes()).toContain('orange')
   })
 
-  test('Is red', () => {
-    const wrapper = mount(ErrorType, {
-      localVue,
-      vuetify,
-      propsData: {
-        level: 2,
-        }
-    })
+  test('is error', () => {
+    wrapper.setProps({ level: 2 })
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Error')
     expect(chip.classes()).toContain('red')

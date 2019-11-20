@@ -20,7 +20,9 @@
           Network interfaces
         </v-toolbar-title>
       </v-toolbar>
-      <ListInterfaces />
+      <ListInterfaces
+        :ifaces="interfaces().data"
+      />
     </v-card>
     <v-card>
       <v-toolbar
@@ -39,7 +41,11 @@
           </v-icon>
         </v-btn>
       </v-toolbar>
-      <ListLogs ref="ListLogs" />
+      <ListLogs
+        ref="ListLogs"
+        :logger="logger().data"
+        @clear="clearLog()"
+      />
     </v-card>
   </section>
 </template>
@@ -58,13 +64,24 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('device', { device: 'find', get: 'get' })
+    ...mapGetters('device', { device: 'find', get: 'get' }),
+    ...mapGetters('interfaces', { interfaces: 'find', get: 'get' }),
+    ...mapGetters('logger', { logger: 'find', get: 'get' })
   },
   mounted () {
     this.findDevice()
+    this.findInterfaces()
+    this.findLogger()
   },
   methods: {
-    ...mapActions('device', { findDevice: 'find' })
+    ...mapActions('device', { findDevice: 'find' }),
+    ...mapActions('interfaces', { findInterfaces: 'find' }),
+    ...mapActions('logger', { findLogger: 'find', removeLogger: 'remove' }),
+    clearLog () {
+      this.removeLogger(null, {
+        query: {}
+      })
+    }
   }
 }
 </script>

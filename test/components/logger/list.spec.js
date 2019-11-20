@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'
-import list from '@/components/device/list.vue'
+import list from '@/components/logger/list.vue'
 
 const localVue = createLocalVue()
 
 
-describe('components/device/list', () => {
+describe('components/logger/list', () => {
   let vuetify = new Vuetify()
   Vue.use(Vuetify)
   let wrapper = mount(list, {
