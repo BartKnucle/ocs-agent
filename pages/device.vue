@@ -8,7 +8,9 @@
           Device
         </v-toolbar-title>
       </v-toolbar>
-      <ListDevice />
+      <ListDevice
+        :device="device().data"
+      />
     </v-card>
     <v-card>
       <v-toolbar
@@ -42,6 +44,7 @@
   </section>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import ListInterfaces from '~/components/interfaces/list.vue'
 import ListDevice from '~/components/device/list.vue'
 import ListLogs from '~/components/logger/list.vue'
@@ -54,9 +57,15 @@ export default {
   data () {
     return {}
   },
-  computed: {},
-  mounted () {},
-  methods: {}
+  computed: {
+    ...mapGetters('device', { device: 'find', get: 'get' })
+  },
+  mounted () {
+    this.findDevice()
+  },
+  methods: {
+    ...mapActions('device', { findDevice: 'find' })
+  }
 }
 </script>
 

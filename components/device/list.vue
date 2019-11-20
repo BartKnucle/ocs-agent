@@ -2,7 +2,7 @@
   <section>
     <v-data-table
       :headers="headers"
-      :items="device().data"
+      :items="device"
       item-key="_id"
       hide-default-footer
     >
@@ -14,34 +14,25 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {},
+  props: {
+    device: {
+      type: Array,
+      default: () => { return [] }
+    }
+  },
   data () {
     return {
       headers: [
         { value: '_id', text: 'Class' },
         { value: 'data', text: 'Value' },
         { value: 'updated', text: 'Updated' }
-      ],
-      hostname: {
-        _id: '',
-        data: ''
-      },
-      distro: {
-        _id: '',
-        data: ''
-      }
+      ]
     }
   },
-  computed: { // only getters have live queries
-    ...mapGetters('device', { device: 'find', get: 'get' })
-  },
-  mounted () {
-    this.find()
-  },
-  methods: {
-    ...mapActions('device', { find: 'find' })
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>

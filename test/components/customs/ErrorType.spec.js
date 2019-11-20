@@ -6,7 +6,7 @@ import ErrorType from '@/components/customs/ErrorType.vue'
 const localVue = createLocalVue()
 
 
-describe('error_type', () => {
+describe('components/customs/ErrorType', () => {
   let vuetify
 
   beforeEach(() => {

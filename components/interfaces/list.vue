@@ -27,7 +27,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import UpDown from '~/components/customs/up_down.vue'
+import UpDown from '~/components/customs/UpDown.vue'
 export default {
   components: {
     UpDown
