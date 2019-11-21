@@ -24,12 +24,10 @@ class Client {
       autoload: true
     })
 
-    this.model.ensureIndex({ fieldName: 'user', unique: true })
-
     //  Get ID
     await si.system()
       .then((data) => {
-        this.credentials.user = data.uuid
+        this.credentials._id = data.uuid
       })
       .catch((err) => {
         this.log({
@@ -38,22 +36,15 @@ class Client {
         })
       })
 
-    await this.model.findOne({ user: this.credentials.user }, async (err, doc) => {
-
-      if (!err) {
+    await this.model.findOne({ _id: this.credentials._id }, async (err, doc) => {
+      if (!err && doc) {
         //  Get credentials from db
-        this.credentials = { user: doc.user, password: doc.password }
+        this.credentials = doc
       } else {
         //  Or create them
         this.credentials.password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
         this.model.insert(this.credentials)
-          .catch((err) => {
-            this.log({
-              level: 0,
-              text: `Credentials allready saved: ${err}`
-            })
-          })
       }
 
       await this.app.client.service('users').create(this.credentials)
