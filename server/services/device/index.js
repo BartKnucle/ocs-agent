@@ -12,44 +12,36 @@ class Device extends Service {
     super.init()
   }
 
-  async fill () {
+  fill () {
     super.fill()
-
-    await si.system()
+    this.data.id = this.app.deviceId
+    si.osInfo()
       .then((data) => {
-        this.data._id = data.uuid
-
-        //  Wait for the ID before getting others informations
-        si.osInfo()
-          .then((data) => {
-            this.data.hostname = data.hostname
-            this.data.distro = data.distro
-          })
-          .catch((err) => {
-            this.log({
-              level: 2,
-              text: `Cannot get system information: ${err}`
-            })
-          })
+        this.data.hostname = data.hostname
+        this.data.distro = data.distro
       })
       .catch((err) => {
         this.log({
           level: 2,
-          text: `Cannot get system ID: ${err}`
+          text: `Cannot get system information: ${err}`
         })
       })
   }
 
   push () {
     super.push()
-    this.remote.create(this.data)
+    this.remote.create(
+      {
+        _id: this.data.id,
+        data: this.data
+      })
       .catch(() => {
-        this.remote.patch(this.data._id, this.data)
+        this.remote.patch(this.data.id, this.data)
       })
   }
 }
 
-module.exports = async (app) => {
+module.exports = (app) => {
   const device = new Device(app)
-  await device.init()
+  device.init()
 }

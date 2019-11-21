@@ -70,18 +70,6 @@ class Interfaces extends Service {
           text: `Cannot network interfaces: ${err}`
         })
       })
-
-    //  Get data from database
-    this.service.find()
-      .then((dbData) => {
-        // Get new data
-      })
-      .catch((err) => {
-        this.log({
-          level: 2,
-          text: `Cannot network interfaces from database: ${err}`
-        })
-      })
   }
 }
 

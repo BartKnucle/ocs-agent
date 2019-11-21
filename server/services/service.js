@@ -49,28 +49,14 @@ module.exports = class Service {
       autoload: true
     })
 
-
     // Proxy for data (trigers DB updates) and load db
-    this.model.find({}, (err, docs) => {
-      if (!err && docs && (Array.isArray(docs) && docs.length)) {
-        docs = docs.reduce((obj, item) => {
-          obj[item._id] = item.data
-          return obj
-        })
-      } else {
-        docs = {}
+    this.data = new Proxy(
+      {},
+      {
+        set: this.onDataUpdate.bind(this),
+        deleteProperty: this.onDataDelete.bind(this)
       }
-
-      if (!err) {
-        this.data = new Proxy(
-          docs,
-          {
-            set: this.onDataUpdate.bind(this),
-            deleteProperty: this.onDataDelete.bind(this)
-          }
-        )
-      }
-    })
+    )
   }
 
   init () {

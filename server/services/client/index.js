@@ -27,6 +27,7 @@ class Client {
     //  Get ID
     await si.system()
       .then((data) => {
+        this.app.deviceId = data.uuid
         this.credentials._id = data.uuid
       })
       .catch((err) => {

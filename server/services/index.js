@@ -6,6 +6,6 @@ const interfaces = require('./interfaces')
 module.exports = async (app) => {
   app.configure(logger)
   await app.configure(client)
-  await app.configure(device)
+  app.configure(device)
   app.configure(interfaces)
 }
