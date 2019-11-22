@@ -1,12 +1,17 @@
 const Service = require('../service')
 
 class Logger extends Service {
+  constructor (app) {
+    super(app)
+    this.app = app
+    this.loglevel = this.app.get('logLevel')
+  }
   init () {
     super.init()
   }
 
   log (log) {
-    if (log.level >= this.app.get('logLevel')) {
+    if (log.level >= this.loglevel) {
       log.service = this.name
       this.app.logger.save(log)
     }
@@ -19,5 +24,6 @@ class Logger extends Service {
 
 module.exports = function (app) {
   const logger = new Logger(app)
+  app.log = logger.log
   logger.init()
 }

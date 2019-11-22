@@ -5,9 +5,9 @@
     item-key="_id"
     hide-default-footer
   >
-    <template v-slot:item.data.default="{ item }">
+    <template v-slot:item.default="{ item }">
       <v-chip
-        v-if="item.data.default"
+        v-if="item.default"
         color="orange"
         label
         small
@@ -18,9 +18,9 @@
     <template v-slot:item.updated="{ item }">
       {{ new Date(item.updated).toLocaleString() }}
     </template>
-    <template v-slot:item.data.operstate="{ item }">
+    <template v-slot:item.operstate="{ item }">
       <UpDown
-        :up="getStatus(item.data.operstate)"
+        :up="getStatus(item.operstate)"
       />
     </template>
   </v-data-table>
@@ -40,14 +40,14 @@ export default {
   data () {
     return {
       headers: [
-        { value: 'data.default', text: 'Default' },
-        { value: 'data.ifaceName', text: 'Name' },
-        { value: 'data.ip4', text: 'IpV4 Address' },
-        { value: 'data.ip4_subnet', text: 'IpV4 Subnet' },
-        { value: 'data.ip6', text: 'IpV6 Address' },
-        { value: 'data.ip6_subnet', text: 'IpV6 Subnet' },
-        { value: 'data.mac', text: 'Mac Address' },
-        { value: 'data.operstate', text: 'Status' },
+        { value: 'default', text: 'Default' },
+        { value: 'ifaceName', text: 'Name' },
+        { value: 'ip4', text: 'IpV4 Address' },
+        { value: 'ip4_subnet', text: 'IpV4 Subnet' },
+        { value: 'ip6', text: 'IpV6 Address' },
+        { value: 'ip6_subnet', text: 'IpV6 Subnet' },
+        { value: 'mac', text: 'Mac Address' },
+        { value: 'operstate', text: 'Status' },
         { value: 'updated', text: 'Updated' }
       ]
     }

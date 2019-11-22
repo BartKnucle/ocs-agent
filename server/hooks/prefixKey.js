@@ -7,6 +7,7 @@ module.exports = () => {
           {},
           ...Object.keys(context.data)
             .filter(key => key !== '_id')
+            .filter(key => key !== 'updated')
             .map(key => ({ [`${context.params.prefix}_${key}`]: context.data[key] }))
         )
       }

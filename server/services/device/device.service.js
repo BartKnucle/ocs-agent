@@ -14,39 +14,19 @@ module.exports = async (app) => {
 
   service.hooks(hooks)
 
-  // Check if we have to update the data
-  const update = (oldData, newData) => {
-    return Object.keys(newData).reduce((result, item) => {
-      result = (oldData[item] !== newData[item]) || result
-      return result
-    }, false)
-  }
-
-  //  Change the prefix of the data keys
-  const changeKey = (prefix, data) => {
-    return Object.assign(
-      {},
-      ...Object.keys(data)
-        .map(key => ({ [`${prefix}_${key}`]: data[key] }))
-    )
-  }
-
   //  Get devices informations
   await si.system()
     .then(async (data) => {
       app.deviceId = data.uuid
 
-      // const newData = changeKey('sys', data)
 
       await service.get(app.deviceId)
         .then(() => {
-          //  if (update(oldData, newData)) {
           service.patch(
             app.deviceId,
             data,
             { prefix: 'sys' }
           )
-          // } */
         })
         .catch(() => {
           service.create({
@@ -62,19 +42,7 @@ module.exports = async (app) => {
       service.patch(
         app.deviceId,
         data,
-        { prefix: 'sys' }
+        { prefix: 'os' }
       )
-      /* service.get(app.deviceId)
-        .then((oldData) => {
-          const newData = changeKey('os', data)
-
-          //  if (update(oldData, newData)) {
-          service.patch(
-            app.deviceId,
-            newData,
-            params
-          )
-          //  }
-        }) */
     })
 }
