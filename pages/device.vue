@@ -9,7 +9,7 @@
         </v-toolbar-title>
       </v-toolbar>
       <ListDevice
-        :device="device().data"
+        :devices="device().data"
       />
     </v-card>
     <v-card>

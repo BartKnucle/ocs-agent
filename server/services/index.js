@@ -1,11 +1,11 @@
 const logger = require('./logger')
 const client = require('./client')
-const device = require('./device')
+const device = require('./device/device.service')
 const interfaces = require('./interfaces')
 
 module.exports = async (app) => {
   app.configure(logger)
-  await app.configure(client)
-  app.configure(device)
+  await app.configure(device)
+  app.configure(client)
   app.configure(interfaces)
 }

@@ -48,10 +48,29 @@ class Interfaces extends Service {
               if (rest.iface === defaultIface.interface) {
                 rest.default = true
                 // Update device IP data
-                this.app.device.data.ip4 = iface.ip4
-                this.app.device.data.ip4_subnet = iface.ip4_subnet
-                this.app.device.data.gatewayV4 = defaultIface.gateway
-                // Get the default gateway
+                this.app.service('device').get(this.app.deviceId)
+                  .then((data) => {
+                    if (data.net_ip4_subnet !== iface.ip4_subnet) {
+                      this.app.service('device').patch(
+                        this.app.deviceId,
+                        { net_ip4_subnet: iface.ip4_subnet }
+                      )
+                    }
+
+                    if (data.net_gatewayV4 !== defaultIface.gateway) {
+                      this.app.service('device').patch(
+                        this.app.deviceId,
+                        { net_gatewayV4: defaultIface.gateway }
+                      )
+                    }
+
+                    if (data.net_ip4 !== iface.ip4) {
+                      this.app.service('device').patch(
+                        this.app.deviceId,
+                        { net_ip4: iface.ip4 }
+                      )
+                    }
+                  })
               }
 
               this.data[iface.iface] = rest
