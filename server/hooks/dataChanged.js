@@ -12,7 +12,6 @@ const dataChanged = async (context) => {
 module.exports = () => {
   return async (context) => {
     if (await dataChanged(context)) {
-      console.log('change')
       return context
     } else {
       context.result = false

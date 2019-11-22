@@ -17,20 +17,17 @@ module.exports = async (app) => {
   //  Get devices informations
   await si.system()
     .then(async (data) => {
-      app.deviceId = data.uuid
-
-
-      await service.get(app.deviceId)
+      await service.get(app.get('deviceId'))
         .then(() => {
           service.patch(
-            app.deviceId,
+            app.get('deviceId'),
             data,
             { prefix: 'sys' }
           )
         })
         .catch(() => {
           service.create({
-            _id: app.deviceId,
+            _id: app.get('deviceId'),
             ...data
           },
           { prefix: 'sys' })
@@ -40,7 +37,7 @@ module.exports = async (app) => {
   si.osInfo()
     .then((data) => {
       service.patch(
-        app.deviceId,
+        app.get('deviceId'),
         data,
         { prefix: 'os' }
       )
