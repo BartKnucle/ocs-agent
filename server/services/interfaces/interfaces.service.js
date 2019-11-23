@@ -54,29 +54,17 @@ module.exports = async (app) => {
               if (rest.iface === defaultIface.interface) {
                 rest.default = true
                 // Update device IP data
-                app.service('device').get(app.get('deviceId'))
-                  .then((data) => {
-                    if (data.net_ip4_subnet !== iface.ip4_subnet) {
-                      app.service('device').patch(
-                        app.get('deviceId'),
-                        { net_ip4_subnet: iface.ip4_subnet }
-                      )
-                    }
 
-                    if (data.net_gatewayV4 !== defaultIface.gateway) {
-                      app.service('device').patch(
-                        app.get('deviceId'),
-                        { net_gatewayV4: defaultIface.gateway }
-                      )
-                    }
+                const deviceDefaultIp = {
+                  net_ip4: iface.ip4,
+                  net_ip4_subnet: iface.ip4_subnet,
+                  net_gatewayV4: defaultIface.gateway,
+                }
 
-                    if (data.net_ip4 !== iface.ip4) {
-                      app.service('device').patch(
-                        app.get('deviceId'),
-                        { net_ip4: iface.ip4 }
-                      )
-                    }
-                  })
+                app.service('device').patch(
+                  app.get('deviceId'),
+                  deviceDefaultIp
+                )
               }
 
               service.create({
