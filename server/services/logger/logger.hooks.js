@@ -1,13 +1,11 @@
-const dataChanged = require('../../hooks/dataChanged')
-
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [dataChanged()],
-    patch: [dataChanged()],
+    update: [],
+    patch: [],
     remove: []
   },
 

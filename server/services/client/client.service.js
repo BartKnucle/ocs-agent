@@ -27,7 +27,10 @@ module.exports = async (app) => {
   app.client.configure(socketio(socket))
   app.client.configure(auth())
 
-  await service.get(credentials._id)
+  socket.on('connect', async (socket) => {
+    console.log('Connected')
+
+    await service.get(credentials._id)
     .then(async (data) => {
       credentials = data
     })
@@ -36,7 +39,7 @@ module.exports = async (app) => {
       service.create(credentials)
     })
 
-  await app.client.service('users').create(credentials)
+    await app.client.service('users').create(credentials)
     .catch((err) => {
       app.log({
         level: 0,
@@ -44,11 +47,16 @@ module.exports = async (app) => {
       })
     })
 
-  await app.client.service('authentication').create({ ...this.credentials, strategy: 'local' })
-    .catch((err) => {
-      app.log({
-        level: 0,
-        text: `Unable to connect to remote server: ${err}`
+    await app.client.service('authentication').create({ ...credentials, strategy: 'local' })
+      .then(() => {
+        console.log('authenticated')
       })
-    })
+      .catch((err) => {
+        app.log({
+          level: 0,
+          text: `Unable to connect to remote server: ${err}`
+        })
+      })
+
+  })
 }

@@ -1,5 +1,5 @@
 const si = require('systeminformation')
-const logger = require('./logger')
+const logger = require('./logger/logger.service')
 const client = require('./client/client.service')
 const device = require('./device/device.service')
 const interfaces = require('./interfaces/interfaces.service')
