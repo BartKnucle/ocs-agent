@@ -55,15 +55,14 @@ module.exports = async (app) => {
                 rest.default = true
                 // Update device IP data
 
-                const deviceDefaultIp = {
-                  net_ip4: iface.ip4,
-                  net_ip4_subnet: iface.ip4_subnet,
-                  net_gatewayV4: defaultIface.gateway,
-                }
-
                 app.service('device').patch(
                   app.get('deviceId'),
-                  deviceDefaultIp
+                  {
+                    ip4: iface.ip4,
+                    ip4_subnet: iface.ip4_subnet,
+                    gatewayV4: defaultIface.gateway,
+                  },
+                  { prefix: 'net' }
                 )
               }
 
