@@ -17,4 +17,12 @@ describe('components/device/list', () => {
   it('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
+
+  test('Device transformation', () => {
+    const device = {
+      _id: '123456',
+      hostname: 'name'
+    }
+    expect(wrapper.vm.getDevice(device)).toEqual([{ _id: '_id', data: '123456' }, { _id: 'hostname', data: 'name' }])
+  })
 })
