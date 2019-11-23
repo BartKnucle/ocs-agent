@@ -13,7 +13,7 @@
         <template v-slot:item.updated="{ item }">
           {{ new Date(item.updated).toLocaleString() }}
         </template>
-      </v-data-table> -->
+      </v-data-table>
     </div>
   </section>
 </template>
