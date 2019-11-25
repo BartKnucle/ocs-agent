@@ -4,9 +4,9 @@ const dataChanged = async (context) => {
     .filter(x => x !== '_id')
     .filter(x => x !== 'updated')
     .reduce((result, item) => {
-    result = (oldData[item] !== context.data[item]) || result
-    return result
-  }, false)
+      result = (oldData[item] !== context.data[item]) || result
+      return result
+    }, false)
 }
 
 module.exports = () => {

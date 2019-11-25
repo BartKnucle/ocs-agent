@@ -1,5 +1,6 @@
 const prefixKey = require('../../hooks/prefixKey')
 const dataChanged = require('../../hooks/dataChanged')
+const push = require('../../hooks/push')
 
 module.exports = {
   before: {
@@ -16,9 +17,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [push()],
+    update: [push()],
+    patch: [push()],
     remove: []
   },
 

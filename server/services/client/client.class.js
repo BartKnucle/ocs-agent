@@ -5,6 +5,10 @@ const auth = require('@feathersjs/authentication-client')
 const ServiceClass = require('../service.class')
 
 exports.Client = class Client extends ServiceClass {
+  constructor (options, app) {
+    super(options, app)
+    this.connected = false
+  }
   setup (app) {
     app.service('logger').on('started', () => {
       let credentials = {
@@ -38,7 +42,7 @@ exports.Client = class Client extends ServiceClass {
 
         await app.client.service('authentication').create({ ...credentials, strategy: 'local' })
           .then(() => {
-            console.log('authenticated')
+            this.connected = true
             super.setup(app)
           })
           .catch((err) => {
