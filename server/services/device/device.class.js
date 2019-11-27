@@ -12,14 +12,11 @@ exports.Device = class Device extends ServiceClass {
       //  Get devices informations
       await si.system()
         .then(async (data) => {
-          await this.get(app.get('deviceId'))
-            .then(() => {
-              this.patch(
-                app.get('deviceId'),
-                data,
-                { prefix: 'sys' }
-              )
-            })
+            this.patch(
+              app.get('deviceId'),
+              data,
+              { prefix: 'sys' }
+            )
             .catch(() => {
               this.create({
                 _id: app.get('deviceId'),
