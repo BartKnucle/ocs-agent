@@ -8,8 +8,8 @@ createWindow = async () => {
     await server.start()
 
     window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1024,
+        height: 768,
         frame: false
     })
 
@@ -24,6 +24,8 @@ createWindow = async () => {
         window = null;
     })
 }
+
+app.setAppUserModelId(process.execPath)
 
 // SSL/TSL: this is the self signed certificate support
 app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {

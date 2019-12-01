@@ -122,7 +122,7 @@ export default {
           to: '/sandbox'
         }
       ],
-      miniVariant: false,
+      miniVariant: true,
       right: true,
       rightDrawer: false,
       title: 'OCM Agent'
