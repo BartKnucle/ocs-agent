@@ -5,6 +5,7 @@
   "author": "Sébastien JARDE",
   "private": true,
   "scripts": {
+    "electron": "electron server/electron.js",
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
@@ -32,16 +33,17 @@
     "systeminformation": "^4.14.17"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4",
-    "@nuxtjs/vuetify": "^1.9.0",
     "@nuxtjs/eslint-config": "^1.1.2",
     "@nuxtjs/eslint-module": "^1.1.0",
+    "@nuxtjs/vuetify": "^1.9.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
     "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "electron": "^7.1.2",
     "eslint": "^6.6.0",
     "eslint-plugin-nuxt": ">=0.4.3",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
     "vue-jest": "^4.0.0-0"
   }
 }
