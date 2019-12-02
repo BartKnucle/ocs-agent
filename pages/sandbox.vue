@@ -16,7 +16,7 @@ export default {
     })
 
     myNotification.onclick = () => {
-      console.log('Notification clicked')
+      //  console.log('Notification clicked')
     }
   }
 }

@@ -4,15 +4,18 @@ var iconpath = path.join(__dirname, '/static/v.png')
 const server = require('./server')
 
 let window
+let tray
+let icon
+let contextMenu
 
 createWindow = async () => {
-    /* Créer une fenêtre de 800px par 600px sans bordures */
     await server.start()
 
-    const icon = nativeImage.createFromPath(iconpath);
-    var appIcon = new Tray(icon)
+    // Tray icon and menu
+    icon = nativeImage.createFromPath(iconpath);
+    tray = new Tray(icon)
 
-    var contextMenu = Menu.buildFromTemplate([
+    contextMenu = Menu.buildFromTemplate([
         {
             label: 'Show App', click: function () {
                 window.show()
@@ -26,8 +29,9 @@ createWindow = async () => {
         }
     ])
 
-    appIcon.setContextMenu(contextMenu)
+    tray.setContextMenu(contextMenu)
 
+    // Main window
     window = new BrowserWindow({
         width: 1024,
         height: 768,
@@ -36,8 +40,14 @@ createWindow = async () => {
         icon: iconpath
     })
 
+    window.setMenu(null)
+
     window.on('close', function (event) {
-        window = null
+        if(!app.isQuiting){
+            event.preventDefault()
+            window.hide()
+        }
+        return false
     })
 
     window.on('minimize', function (event) {
@@ -46,11 +56,11 @@ createWindow = async () => {
     })
 
     window.on('show', function () {
-        appIcon.setHighlightMode('always')
+        //appIcon.setHighlightMode('always')
     })
 
     /* Si vous décommentez cette ligne, vous verrez la console de débug Chrome */
-    //window.webContents.openDevTools()
+    window.webContents.openDevTools()
 
     /* Display the homepage of the server */
     window.loadURL('https://127.0.0.1:3000')
@@ -67,4 +77,4 @@ app.on('certificate-error', (event, webContents, url, error, certificate, callba
 })
 
 app.on('ready', createWindow)
-app.on('activate', () => window === null && createWindow())
+// app.on('activate', () => window === null && createWindow())

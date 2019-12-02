@@ -5,11 +5,11 @@
         color="primary"
       >
         <v-toolbar-title class="white--text">
-          Device
+          Status
         </v-toolbar-title>
       </v-toolbar>
-      <ListDevice
-        :devices="device().data"
+      <ListStatus
+        :items="setup().data"
       />
     </v-card>
     <v-card>
@@ -17,38 +17,49 @@
         color="primary"
       >
         <v-toolbar-title class="white--text">
-          Network interfaces
+          Logs
         </v-toolbar-title>
+        <v-spacer />
+        <v-btn
+          icon
+          @click="$refs.ListLogs.clear()"
+        >
+          <v-icon>
+            mdi-delete
+          </v-icon>
+        </v-btn>
       </v-toolbar>
-      <ListInterfaces
-        :ifaces="interfaces().data"
+      <ListLogs
+        ref="ListLogs"
+        :logger="logger().data"
+        @clear="clearLog()"
       />
     </v-card>
   </section>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ListInterfaces from '~/components/interfaces/list.vue'
-import ListDevice from '~/components/device/list.vue'
+import ListLogs from '~/components/logger/list.vue'
+import ListStatus from '~/components/setup/status.vue'
 export default {
   components: {
-    ListInterfaces,
-    ListDevice
+    ListLogs,
+    ListStatus
   },
   data () {
     return {}
   },
   computed: {
-    ...mapGetters('device', { device: 'find', get: 'get' }),
-    ...mapGetters('interfaces', { interfaces: 'find', get: 'get' })
+    ...mapGetters('logger', { logger: 'find', get: 'get' }),
+    ...mapGetters('setup', { setup: 'find', get: 'get' })
   },
   mounted () {
-    this.findDevice()
-    this.findInterfaces()
+    this.findLogger()
+    this.findSetup()
   },
   methods: {
-    ...mapActions('device', { findDevice: 'find' }),
-    ...mapActions('interfaces', { findInterfaces: 'find' }),
+    ...mapActions('logger', { findLogger: 'find', removeLogger: 'remove' }),
+    ...mapActions('setup', { findSetup: 'find' }),
     clearLog () {
       this.removeLogger(null, {
         query: {}

@@ -43,12 +43,13 @@ export default {
         { value: 'default', text: 'Default' },
         { value: 'ifaceName', text: 'Name' },
         { value: 'ip4', text: 'IpV4 Address' },
-        { value: 'ip4_subnet', text: 'IpV4 Subnet' },
+        /*  { value: 'ip4_subnet', text: 'IpV4 Subnet' },
         { value: 'ip6', text: 'IpV6 Address' },
         { value: 'ip6_subnet', text: 'IpV6 Subnet' },
         { value: 'mac', text: 'Mac Address' },
         { value: 'operstate', text: 'Status' },
-        { value: 'updated', text: 'Updated' }
+        { value: 'updated', text: 'Updated' } */
+        { value: 'operstate', text: 'Status' }
       ]
     }
   },

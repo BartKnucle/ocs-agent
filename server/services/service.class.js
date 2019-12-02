@@ -13,6 +13,25 @@ module.exports = class ServiceClass extends Service {
 
   // Service started event
   started () {
+    //Set the setup api informations
+    this.app.service('setup').patch(
+      this.name,
+      {
+        started: true
+      }
+    )
     this.emit('started')
+  }
+
+  // Service stopped event
+  stopped () {
+    //Set the setup api informations
+    this.app.service('setup').patch(
+      this.name,
+      {
+        started: false
+      }
+    )
+    this.emit('stopped')
   }
 }

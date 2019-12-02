@@ -7,8 +7,8 @@ const ServiceClass = require('../service.class')
 exports.Client = class Client extends ServiceClass {
   constructor (options, app) {
     super(options, app)
-    this.connected = false
   }
+
   setup (app) {
     app.service('logger').on('started', () => {
       let credentials = {
@@ -19,6 +19,10 @@ exports.Client = class Client extends ServiceClass {
       app.client = feathers()
       app.client.configure(socketio(socket))
       app.client.configure(auth())
+
+      socket.on('disconnect', async (socket) => {
+        this.stopped()
+      })
 
       socket.on('connect', async (socket) => {
         console.log('Connected')
@@ -42,7 +46,6 @@ exports.Client = class Client extends ServiceClass {
 
         await app.client.service('authentication').create({ ...credentials, strategy: 'local' })
           .then(() => {
-            this.connected = true
             super.setup(app)
           })
           .catch((err) => {
