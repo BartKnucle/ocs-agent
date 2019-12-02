@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import feathersVuex from 'feathers-vuex'
 
 // Setup the Feathers client
-const socket = io(process.env.remoteApiURL, { transports: ['websocket'] })
+const socket = io(process.env.remoteApiURL, { secure: true, transports: ['websocket'] })
 const feathersClient = feathers()
   .configure(socketio(socket))
 

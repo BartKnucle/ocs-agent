@@ -85,12 +85,13 @@
     >
       <span>&copy; 2019</span>
       <v-spacer />
-      <UpDown />
+      <UpDown :up="getStatus" />
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import UpDown from '~/components/customs/UpDown.vue'
 export default {
   components: {
@@ -133,6 +134,22 @@ export default {
       rightDrawer: false,
       title: 'OCM Agent'
     }
+  },
+  computed: {
+    ...mapGetters('setup', { setup: 'find', get: 'get' }),
+    getStatus () {
+      return this.setup().data
+        .reduce((status, service) => {
+          status = status && service.started
+          return status
+        }, true)
+    }
+  },
+  mounted () {
+    this.findSetup()
+  },
+  methods: {
+    ...mapActions('setup', { findSetup: 'find' })
   }
 }
 </script>
