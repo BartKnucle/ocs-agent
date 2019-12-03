@@ -26,7 +26,6 @@
     "feathers-nedb": "^5.1.0",
     "feathers-vuex": "^2.0.5",
     "nedb": "^1.8.0",
-    "network-calculator": "^2.0.1",
     "node-powershell": "^4.0.0",
     "nuxt": "^2.10.2",
     "selfsigned": "^1.10.7",
