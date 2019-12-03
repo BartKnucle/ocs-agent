@@ -10,6 +10,7 @@
         :installed="item.installed"
         :admin="item.admin"
         :update="item.update"
+        @install="$emit('install', item._id)"
       />
     </template>
   </v-data-table>

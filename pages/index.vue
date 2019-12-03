@@ -1,11 +1,15 @@
 <template>
   <section>
     Software
-    <SoftwareList :items="softs" />
+    <SoftwareList
+      :items="software().data"
+      @install="install($event)"
+    />
   </section>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import SoftwareList from '~/components/software/list.vue'
 export default {
   name: 'Software',
@@ -13,41 +17,18 @@ export default {
     SoftwareList
   },
   data () {
-    return {
-      softs: [
-        {
-          _id: '1',
-          name: 'Vlc media player',
-          status: 'Installed',
-          update: false,
-          installed: true,
-          admin: false
-        },
-        {
-          _id: '2',
-          name: 'Office 2016',
-          status: 'Installed',
-          update: false,
-          installed: true,
-          admin: true
-        },
-        {
-          _id: '3',
-          name: 'Adobe Acrobat reader',
-          status: 'Installation begin at DATE',
-          update: false,
-          installed: false,
-          admin: false
-        },
-        {
-          _id: '4',
-          name: 'Teamviewer',
-          status: 'Installation begin at DATE',
-          update: true,
-          installed: false,
-          admin: false
-        }
-      ]
+    return {}
+  },
+  computed: {
+    ...mapGetters('software', { software: 'find', get: 'get' })
+  },
+  mounted () {
+    this.findSoftware()
+  },
+  methods: {
+    ...mapActions('software', { findSoftware: 'find', patch: 'patch' }),
+    install (id) {
+      this.patch([id, { status: 'installing' }])
     }
   }
 }

@@ -26,6 +26,16 @@ const services = [
     _id: 'device',
     description: 'Device service',
     started: false
+  },
+  {
+    _id: 'software',
+    description: 'Software service',
+    started: false
+  },
+  {
+    _id: 'updates',
+    description: 'Updates service',
+    started: false
   }
 ]
 

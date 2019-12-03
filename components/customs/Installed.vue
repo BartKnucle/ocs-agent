@@ -1,11 +1,19 @@
 <template>
-  <v-chip
+  <v-btn
+    :color="color()"
+    label
+    small
+    @click="$emit('install')"
+  >
+    {{ text() }}
+  </v-btn>
+  <!-- <v-chip
     :color="color()"
     label
     small
   >
     {{ text() }}
-  </v-chip>
+  </v-chip> -->
 </template>
 <script>
 
