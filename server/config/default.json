@@ -1,7 +1,8 @@
 {
   "host": "0.0.0.0",
   "port": 3000,
-  "nedb": "../data/db/",
+  "nedb": "../data_dev/db/",
+  "cache": "../data_dev/cache/",
   "remoteApiURL": "https://localhost:3001",
   "logLevel": 0
 }

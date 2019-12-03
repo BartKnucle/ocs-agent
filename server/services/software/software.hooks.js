@@ -1,13 +1,22 @@
 const dataChanged = require('../../hooks/dataChanged')
 
+const install = (options = {}) => {
+  return (context) => {
+    if (context.data.status === 'Installing') {
+      context.service.install(context.id)
+    }
+    return context
+  }
+}
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [dataChanged()],
-    patch: [dataChanged()],
+    create: [install()],
+    update: [install(), dataChanged()],
+    patch: [install(), dataChanged()],
     remove: []
   },
 

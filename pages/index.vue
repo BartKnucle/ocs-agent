@@ -28,7 +28,7 @@ export default {
   methods: {
     ...mapActions('software', { findSoftware: 'find', patch: 'patch' }),
     install (id) {
-      this.patch([id, { status: 'installing' }])
+      this.patch([id, { status: 'Installing' }])
     }
   }
 }

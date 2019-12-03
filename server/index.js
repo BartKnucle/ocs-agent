@@ -13,7 +13,6 @@ const certif = require('./certif')
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 
 async function start () {
-
   const app = express(feathers())
 
   const { Nuxt, Builder } = require('nuxt')
@@ -49,7 +48,6 @@ async function start () {
   const server = https.createServer(credentials, app).listen(port)
 
   app.setup(server)
-
 
   consola.ready({
     message: `Feathers application started on ${host}:${port}`,

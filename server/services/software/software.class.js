@@ -1,23 +1,24 @@
-const fs = require("fs")
+const fs = require('fs')
+const path = require('path')
+const { exec } = require('child_process')
 const Shell = require('node-powershell')
 const ServiceClass = require('../service.class')
 
 exports.Software = class Software extends ServiceClass {
   setup (app) {
-
-    //Check if the cache directory exist create it if not
+    //  Check if the cache directory exist create it if not
     if (!fs.existsSync('./server/data/cache/software')) {
-      fs.mkdirSync('./server/data/cache/software', {recursive: true})
-    } 
+      fs.mkdirSync('./server/data/cache/software', { recursive: true })
+    }
 
     super.setup(app)
   }
 
   // Check server for new software
-  check() {}
+  check () {}
 
   // Process a software installation
-  install(id) {
+  install (id) {
     // Get the software informations
     if (!this.detect(id)) {
       if (!this.inCache(id)) {
@@ -28,10 +29,11 @@ exports.Software = class Software extends ServiceClass {
       }
 
       this.get(id).then((software) => {
-        //Install software
+        //  Install software
+        this.patch(id, { status: 'Running command' })
         switch (software.install_type) {
           case 'powershell':
-              this.execPS(software.install_command)
+            this.execPS(software.install_command)
             break
           case 'cmd':
             this.execCMD(software.install_command)
@@ -44,31 +46,31 @@ exports.Software = class Software extends ServiceClass {
   }
 
   // Check if the application is in cache
-  inCache(id) {}
+  inCache (id) {}
 
   // Download file from distribution point
-  download(id) {}
+  download (id) {
+    this.patch(id, { status: 'Downloading' })
+  }
 
   // Extract the archive and remove it
-  extract(id) {}
+  extract (id) {
+    this.patch(id, { status: 'Extracting' })
+  }
 
-  async detect(id) {
+  async detect (id) {
+    this.patch(id, { status: 'Detecting' })
     const software = await this.get(id)
     switch (software.detect_type) {
       case 'powershell':
-          return this.execPS(id, software.detect_command)
-        break
+        return this.execPS(id, software.detect_command)
       case 'cmd':
         return this.execCMD(id, software.detect_command)
-      break;
-      default:
-        break;
     }
-
   }
 
   // Detect if a software is present
-  execPS(id, command) {
+  execPS (id, command) {
     const ps = new Shell({
       executionPolicy: 'Bypass',
       noProfile: true
@@ -76,15 +78,23 @@ exports.Software = class Software extends ServiceClass {
 
     ps.addCommand('./server/data/cache/software/' + id + '/' + command)
     ps.invoke()
-    .then(output => {
-      console.log(output)
-      ps.dispose()
-    })
-    .catch(err => {
-      console.log(err)
-      ps.dispose()
-    })
+      .then((output) => {
+        console.log(output)
+        ps.dispose()
+      })
+      .catch((err) => {
+        console.log(err)
+        ps.dispose()
+      })
   }
 
-  execCMD(id, command) {}
+  execCMD (id, command) {
+    const scriptPath = path.join(this.app.get('cache'), 'software', id, command)
+    exec('sh ' + scriptPath, (error, stdout, stderr) => {
+      if (error) {
+        throw error
+      }
+      console.log(stdout)
+    })
+  }
 }
