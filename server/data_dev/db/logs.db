@@ -1,8 +1,17 @@
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575452774563},"_id":"4qowg9Yo4o2rUHoA"}
 {"level":0,"text":"Unable to connect to remote server: NotAuthenticated: Invalid login","updated":{"$$date":1575399192973},"_id":"7Sg0yAE5Xu5xjX2a"}
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575451741235},"_id":"7V3euyNiIosAKPM5"}
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575453712701},"_id":"8BhLYFAzZTiAMH2y"}
+{"level":2,"text":"Cannot default interface: Error: Unable to determine default gateway","updated":{"$$date":1575452366736},"_id":"Dn8tE96YibDyt95B"}
 {"level":0,"text":"Remote user allready created: Error: Can't insert key , it violates the unique constraint","updated":{"$$date":1575399192971},"_id":"G1d07PpgxbcapwC4"}
 {"level":0,"text":"Unable to connect to remote server: NotAuthenticated: Invalid login","updated":{"$$date":1575400021489},"_id":"O4XBuV1f2MMgPaps"}
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575452335519},"_id":"PSgRALuuoUvxo1OO"}
 {"level":0,"text":"Remote user allready created: Error: Can't insert key , it violates the unique constraint","updated":{"$$date":1575400040559},"_id":"SzFFj0OvUVYsk0xr"}
+{"level":2,"text":"Cannot default interface: Error: Unable to determine default gateway","updated":{"$$date":1575452376691},"_id":"UOPrYOdHSz7XVh1g"}
 {"level":0,"text":"Unable to connect to remote server: NotAuthenticated: Invalid login","updated":{"$$date":1575400040561},"_id":"VZKpaRSmmtbhceMW"}
+{"level":0,"text":"Unable to connect to remote server: NotAuthenticated: Invalid login","updated":{"$$date":1575400076556},"_id":"j9g6IVDDezV3BCxa"}
+{"level":2,"text":"Cannot default interface: Error: Unable to determine default gateway","updated":{"$$date":1575452357047},"_id":"jHkkxHLyhCWVvf1C"}
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575453632544},"_id":"mzf3CNHXndUDKmbf"}
 {"level":0,"text":"Remote user allready created: Error: Can't insert key , it violates the unique constraint","updated":{"$$date":1575400021486},"_id":"qAlx2zD4MqWRS9m5"}
 {"level":0,"text":"Remote user allready created: Error: Can't insert key , it violates the unique constraint","updated":{"$$date":1575400076554},"_id":"zZ7rV78MMv8aw2Q0"}
-{"level":0,"text":"Unable to connect to remote server: NotAuthenticated: Invalid login","updated":{"$$date":1575400076556},"_id":"j9g6IVDDezV3BCxa"}
+{"level":0,"text":"Remote user allready created: Error: Can't insert key 4C4C4544-0038-4E10-804B-CAC04F4D3732, it violates the unique constraint","updated":{"$$date":1575453871514},"_id":"FGxVDPqdcuuweyn4"}
