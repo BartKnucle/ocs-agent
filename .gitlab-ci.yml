@@ -1,7 +1,7 @@
 stages:
   - install
-  - quality
   - build
+  - quality
 
 install:
   stage: install
@@ -16,25 +16,6 @@ install:
     paths:
       - node_modules/
 
-linting:
-  stage: quality
-  tags:
-    - test
-  script:
-    - npm run lint
-  dependencies:
-    - install
-
-run_tests:
-  stage: quality
-  tags:
-    - test
-  script:
-    -  npm run test
-  dependencies:
-    - install
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-
 build:
   stage: build
   tags:
@@ -47,5 +28,23 @@ build:
       - dist
       - .nuxt
   dependencies:
-    - run_tests
-    - linting
+    - install
+
+linting:
+  stage: quality
+  tags:
+    - test
+  script:
+    - npm run lint
+  dependencies:
+    - build
+
+run_tests:
+  stage: quality
+  tags:
+    - test
+  script:
+    -  npm run test
+  dependencies:
+    - build
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
