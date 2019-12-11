@@ -37,7 +37,7 @@ linting:
   script:
     - npm run lint
   dependencies:
-    - build
+    - install
 
 run_tests:
   stage: quality
@@ -46,5 +46,5 @@ run_tests:
   script:
     -  npm run test
   dependencies:
-    - build
+    - install
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
