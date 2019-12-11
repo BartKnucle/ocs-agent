@@ -5,11 +5,10 @@ import UpDown from '@/components/customs/UpDown.vue'
 
 const localVue = createLocalVue()
 
-
 describe('components/customs/UpDown', () => {
-  let vuetify = new Vuetify()
+  const vuetify = new Vuetify()
   Vue.use(Vuetify)
-  let wrapper = mount(UpDown, {
+  const wrapper = mount(UpDown, {
     localVue,
     vuetify
   })

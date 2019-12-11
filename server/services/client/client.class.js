@@ -5,10 +5,6 @@ const auth = require('@feathersjs/authentication-client')
 const ServiceClass = require('../service.class')
 
 exports.Client = class Client extends ServiceClass {
-  constructor (options, app) {
-    super(options, app)
-  }
-
   setup (app) {
     app.service('logger').on('started', () => {
       let credentials = {
@@ -20,13 +16,11 @@ exports.Client = class Client extends ServiceClass {
       app.client.configure(socketio(socket))
       app.client.configure(auth())
 
-      socket.on('disconnect', async (socket) => {
+      socket.on('disconnect', (socket) => {
         this.stopped()
       })
 
       socket.on('connect', async (socket) => {
-        console.log('Connected')
-
         await this.get(credentials._id)
           .then((data) => {
             credentials = data

@@ -42,6 +42,9 @@ exports.Software = class Software extends ServiceClass {
             break
         }
       })
+        .catch((err) => {
+          return err
+        })
     }
   }
 
@@ -79,12 +82,11 @@ exports.Software = class Software extends ServiceClass {
     ps.addCommand('./server/data/cache/software/' + id + '/' + command)
     ps.invoke()
       .then((output) => {
-        console.log(output)
         ps.dispose()
       })
       .catch((err) => {
-        console.log(err)
         ps.dispose()
+        return err
       })
   }
 
@@ -94,7 +96,6 @@ exports.Software = class Software extends ServiceClass {
       if (error) {
         throw error
       }
-      console.log(stdout)
     })
   }
 }

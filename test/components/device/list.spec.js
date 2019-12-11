@@ -5,11 +5,10 @@ import list from '@/components/device/list.vue'
 
 const localVue = createLocalVue()
 
-
 describe('components/device/list', () => {
-  let vuetify = new Vuetify()
+  const vuetify = new Vuetify()
   Vue.use(Vuetify)
-  let wrapper = mount(list, {
+  const wrapper = mount(list, {
     localVue,
     vuetify
   })

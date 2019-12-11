@@ -5,11 +5,10 @@ import ErrorType from '@/components/customs/ErrorType.vue'
 
 const localVue = createLocalVue()
 
-
 describe('components/customs/ErrorType', () => {
-  let vuetify = new Vuetify()
+  const vuetify = new Vuetify()
   Vue.use(Vuetify)
-  let wrapper = mount(ErrorType, {
+  const wrapper = mount(ErrorType, {
     localVue,
     vuetify
   })

@@ -41,7 +41,7 @@ const services = [
 
 exports.Setup = class Setup extends ServiceClass {
   async setup (app) {
-    //Set the default status
+    //  Set the default status
     await this.create(services)
 
     // Get device ID

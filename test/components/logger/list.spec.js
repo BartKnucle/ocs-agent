@@ -5,11 +5,10 @@ import list from '@/components/logger/list.vue'
 
 const localVue = createLocalVue()
 
-
 describe('components/logger/list', () => {
-  let vuetify = new Vuetify()
+  const vuetify = new Vuetify()
   Vue.use(Vuetify)
-  let wrapper = mount(list, {
+  const wrapper = mount(list, {
     localVue,
     vuetify
   })
