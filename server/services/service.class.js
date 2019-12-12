@@ -14,7 +14,7 @@ module.exports = class ServiceClass extends Service {
   // Service started event
   started () {
     //  Set the setup api informations
-    this.app.service('setup').patch(
+    this.app.service('/api/setup').patch(
       this.name,
       {
         started: true
@@ -26,7 +26,7 @@ module.exports = class ServiceClass extends Service {
   // Service stopped event
   stopped () {
     //  Set the setup api informations
-    this.app.service('setup').patch(
+    this.app.service('/api/setup').patch(
       this.name,
       {
         started: false

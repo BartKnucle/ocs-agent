@@ -8,8 +8,8 @@ module.exports = (app) => {
     paginate: app.get('paginate')
   }
 
-  app.use('/device', new Device(options, app))
-  const service = app.service('device')
+  app.use('/api/device', new Device(options, app))
+  const service = app.service('/api/device')
 
   service.hooks(hooks)
 }

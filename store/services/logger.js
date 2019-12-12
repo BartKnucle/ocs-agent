@@ -3,7 +3,7 @@ import feathersClient, {
   BaseModel
 } from '../apis/local'
 
-const serviceName = 'logger'
+const serviceName = '/api/logger'
 
 // Extend the base class
 class Logger extends BaseModel {

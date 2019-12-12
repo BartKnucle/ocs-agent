@@ -8,8 +8,8 @@ module.exports = (app) => {
     paginate: app.get('paginate')
   }
 
-  app.use('/updates', new Updates(options, app))
-  const service = app.service('updates')
+  app.use('/api/updates', new Updates(options, app))
+  const service = app.service('/api/updates')
 
   service.hooks(hooks)
 }

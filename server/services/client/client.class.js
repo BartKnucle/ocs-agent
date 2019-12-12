@@ -6,7 +6,7 @@ const ServiceClass = require('../service.class')
 
 exports.Client = class Client extends ServiceClass {
   setup (app) {
-    app.service('logger').on('started', () => {
+    app.service('/api/logger').on('started', () => {
       let credentials = {
         _id: app.get('deviceId')
       }
@@ -30,7 +30,7 @@ exports.Client = class Client extends ServiceClass {
             this.create(credentials)
           })
 
-        await app.client.service('users').create(credentials)
+        await app.client.service('/api/users').create(credentials)
           .catch((err) => {
             app.log({
               level: 0,
@@ -38,7 +38,7 @@ exports.Client = class Client extends ServiceClass {
             })
           })
 
-        await app.client.service('authentication').create({ ...credentials, strategy: 'local' })
+        await app.client.service('/api/authentication').create({ ...credentials, strategy: 'local' })
           .then(() => {
             super.setup(app)
           })

@@ -10,8 +10,8 @@ module.exports = (app) => {
     multi: true
   }
 
-  app.use('/logger', new Logger(options, app))
-  const service = app.service('logger')
+  app.use('/api/logger', new Logger(options, app))
+  const service = app.service('/api/logger')
 
   service.hooks(hooks)
 }

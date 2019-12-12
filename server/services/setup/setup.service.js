@@ -9,8 +9,8 @@ module.exports = (app) => {
     multi: true
   }
 
-  app.use('/setup', new Setup(options, app))
-  const service = app.service('setup')
+  app.use('/api/setup', new Setup(options, app))
+  const service = app.service('/api/setup')
 
   service.hooks(hooks)
 }

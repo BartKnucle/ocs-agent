@@ -4,11 +4,11 @@ const ServiceClass = require('../service.class')
 exports.Device = class Device extends ServiceClass {
   constructor (options, app) {
     super(options, app)
-    this.remote = 'devices'
+    this.remote = '/api/devices'
   }
 
   setup (app) {
-    app.service('client').on('started', async () => {
+    app.service('/api/client').on('started', async () => {
       //  Get devices informations
       await si.system()
         .then((data) => {

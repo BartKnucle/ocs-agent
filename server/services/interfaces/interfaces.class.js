@@ -5,7 +5,7 @@ const ServiceClass = require('../service.class')
 
 exports.Interfaces = class Interfaces extends ServiceClass {
   setup (app) {
-    app.service('device').on('started', () => {
+    app.service('/api/device').on('started', () => {
       const update = () => {
         si.networkInterfaces()
           .then(async (interfaces) => {
@@ -44,7 +44,7 @@ exports.Interfaces = class Interfaces extends ServiceClass {
                     rest.default = true
                     // Update device IP data
 
-                    app.service('device').patch(
+                    app.service('/api/device').patch(
                       app.get('deviceId'),
                       {
                         ip4: iface.ip4,
