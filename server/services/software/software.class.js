@@ -91,7 +91,7 @@ exports.Software = class Software extends ServiceClass {
   }
 
   execCMD (id, command) {
-    const scriptPath = path.join(this.app.get('cache'), 'software', id, command)
+    const scriptPath = path.join(this.app.get('cachePath'), 'software', id, command)
     exec('sh ' + scriptPath, (error, stdout, stderr) => {
       if (error) {
         throw error

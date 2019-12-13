@@ -4,14 +4,26 @@
   "description": "Open configuration managment agent",
   "author": "Sébastien JARDE",
   "private": true,
+  "build": {
+    "appId": "ocs-client.id",
+    "mac": {
+      "category": "configuration.managment"
+    },
+    "directories": {
+      "buildResources": "pack",
+      "output": "pack"
+    }
+  },
   "scripts": {
-    "electron": "electron ./window.js",
+    "electron": "electron .",
     "dev": "cross-env NODE_ENV=development nodemon ./main.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node ./main.js",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "test": "jest"
+    "test": "jest",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "^4.3.11",
@@ -20,6 +32,8 @@
     "@feathersjs/feathers": "^4.3.10",
     "@feathersjs/socketio": "^4.3.10",
     "@feathersjs/socketio-client": "^4.3.10",
+    "@nuxtjs/vuetify": "^1.9.0",
+    "@nuxtjs/eslint-module": "^1.1.0",
     "cross-env": "^6.0.3",
     "default-gateway": "^5.0.4",
     "fast-deep-equal": "^2.0.1",
@@ -34,12 +48,11 @@
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.1.2",
-    "@nuxtjs/eslint-module": "^1.1.0",
-    "@nuxtjs/vuetify": "^1.9.0",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "electron": "^7.1.2",
+    "electron-builder": "^21.2.0",
     "eslint": "^6.6.0",
     "eslint-plugin-nuxt": ">=0.4.3",
     "jest": "^24.9.0",

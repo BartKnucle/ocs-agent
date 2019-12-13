@@ -33,6 +33,10 @@ async function start () {
   const configuration = require('@feathersjs/configuration')
   app.configure(configuration()).use(nuxt.render)
 
+  app.set('homePath', path.join(require('os').homedir(), '.ocs-agent'))
+  app.set('dbPath', path.join(app.get('homePath'), app.get('nedb')))
+  app.set('cachePath', path.join(app.get('homePath'), app.get('cache')))
+
   app.configure(socketio())
   app.hooks(require('./app.hooks'))
   app.configure(services)

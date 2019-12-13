@@ -89,6 +89,5 @@ sw.*
 # Vim swap files
 *.swp
 
-#Server data
-server/data
-server/data_dev
+#Packages
+pack
