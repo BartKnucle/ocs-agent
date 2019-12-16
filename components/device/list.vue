@@ -39,10 +39,11 @@ export default {
   mounted () {},
   methods: {
     getDevice (device) {
-      return Object.keys(device)
+      let deviceKey = Object.keys(device)
         .map((key) => {
           return { _id: key, data: device[key] }
         })
+      return deviceKey
     }
   }
 }
