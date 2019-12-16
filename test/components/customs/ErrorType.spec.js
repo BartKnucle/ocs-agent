@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'
-import ErrorType from '@/components/customs/ErrorType.vue'
+import ErrorType from '@/client/components/customs/ErrorType.vue'
 
 const localVue = createLocalVue()
 const vuetify = new Vuetify()

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'
-import UpDown from '@/components/customs/UpDown.vue'
+import UpDown from '@/client/components/customs/UpDown.vue'
 
 const localVue = createLocalVue()
 

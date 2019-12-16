@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'
-import list from '@/components/interfaces/list.vue'
+import list from '@/client/components/interfaces/list.vue'
 
 const localVue = createLocalVue()
 
