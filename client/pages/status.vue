@@ -35,6 +35,7 @@
         @clear="clearLog()"
       />
     </v-card>
+    {{ logger() }}
   </section>
 </template>
 <script>

@@ -109,6 +109,11 @@ export default {
           to: '/'
         },
         {
+          icon: 'mdi-windows',
+          title: 'New Software',
+          to: '/software'
+        },
+        {
           icon: 'mdi-arrow-up-bold-circle',
           title: 'Updates',
           to: '/updates'
@@ -121,7 +126,7 @@ export default {
         {
           icon: 'mdi-laptop',
           title: 'Status',
-          to: '/status'
+          to: '/logs'
         },
         {
           icon: 'mdi-play',
