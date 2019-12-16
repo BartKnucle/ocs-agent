@@ -51,7 +51,7 @@ run_tests:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
 
 deploy:
-  stage: quality
+  stage: deploy
   tags:
     - test
   script:
