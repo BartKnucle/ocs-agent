@@ -13,7 +13,7 @@ const certif = require('./certif')
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 
-async function start () {
+function start () {
   const app = express(feathers())
 
   const configuration = require('@feathersjs/configuration')
