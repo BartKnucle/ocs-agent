@@ -6,6 +6,7 @@ const feathers = require('@feathersjs/feathers')
 const socketio = require('@feathersjs/socketio')
 const express = require('@feathersjs/express')
 
+const middleware = require('./middleware')
 const services = require('./services')
 const channels = require('./channels')
 const certif = require('./certif')
@@ -15,23 +16,8 @@ process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 async function start () {
   const app = express(feathers())
 
-  const { Nuxt, Builder } = require('nuxt')
-
-  // Setup nuxt.js
-  const config = require('../nuxt.config.js')
-  config.rootDir = path.resolve(__dirname, '..')
-  config.dev = process.env.NODE_ENV !== 'production'
-
-  const nuxt = new Nuxt(config)
-  if (config.dev) {
-    const builder = new Builder(nuxt)
-    await builder.build()
-  } else {
-    await nuxt.ready()
-  }
-
   const configuration = require('@feathersjs/configuration')
-  app.configure(configuration()).use(nuxt.render)
+  app.configure(configuration())
 
   app.set('homePath', path.join(require('os').homedir(), '.ocs-agent'))
   app.set('dbPath', path.join(app.get('homePath'), app.get('nedb')))
@@ -41,6 +27,7 @@ async function start () {
   app.hooks(require('./app.hooks'))
   app.configure(services)
   app.configure(channels)
+  app.configure(middleware)
 
   const host = app.get('host')
   const port = app.get('port')
