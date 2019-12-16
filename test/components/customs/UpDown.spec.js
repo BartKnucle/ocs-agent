@@ -19,6 +19,7 @@ describe('components/customs/UpDown', () => {
 
   it('is UP', () => {
     wrapper.setProps({ up: true })
+    await Vue.nextTick()
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('UP')
     expect(chip.classes()).toContain('green')
@@ -26,6 +27,7 @@ describe('components/customs/UpDown', () => {
 
   it('is DOWN', () => {
     wrapper.setProps({ up: false })
+    await Vue.nextTick()
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('DOWN')
     expect(chip.classes()).toContain('red')

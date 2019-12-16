@@ -21,8 +21,8 @@
         </v-toolbar-title>
         <v-spacer />
         <v-btn
-          icon
           @click="$refs.ListLogs.clear()"
+          icon
         >
           <v-icon>
             mdi-delete

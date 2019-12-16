@@ -1,9 +1,9 @@
 <template>
   <v-btn
     :color="color()"
+    @click="$emit('install')"
     label
     small
-    @click="$emit('install')"
   >
     {{ text() }}
   </v-btn>

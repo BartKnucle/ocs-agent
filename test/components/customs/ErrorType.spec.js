@@ -4,21 +4,21 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import ErrorType from '@/components/customs/ErrorType.vue'
 
 const localVue = createLocalVue()
-
-describe('components/customs/ErrorType', () => {
-  const vuetify = new Vuetify()
+const vuetify = new Vuetify()
   Vue.use(Vuetify)
   const wrapper = mount(ErrorType, {
     localVue,
     vuetify
   })
 
+describe('components/customs/ErrorType', () => {
   it('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
   it('is Info', () => {
     wrapper.setProps({ level: 0 })
+    await Vue.nextTick()
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Info')
     expect(chip.classes()).toContain('yellow')
@@ -26,6 +26,7 @@ describe('components/customs/ErrorType', () => {
 
   test('is Warning', () => {
     wrapper.setProps({ level: 1 })
+    await Vue.nextTick()
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Warning')
     expect(chip.classes()).toContain('orange')
@@ -33,6 +34,7 @@ describe('components/customs/ErrorType', () => {
 
   test('is error', () => {
     wrapper.setProps({ level: 2 })
+    await Vue.nextTick()
     const chip = wrapper.find('.v-chip')
     expect(chip.text()).toBe('Error')
     expect(chip.classes()).toContain('red')
