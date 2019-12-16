@@ -26,8 +26,8 @@ build:
   artifacts:
     expire_in: 1 week
     paths:
-      - dist
-      - .nuxt
+      - ./client/dist
+      - ./client/.nuxt
   dependencies:
     - install
 
