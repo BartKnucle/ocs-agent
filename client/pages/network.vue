@@ -5,8 +5,7 @@
       :headers="headers"
       :buttons="buttons"
       @componentEvent="onEvent"
-    >
-    </Datatable>
+    />
   </section>
 </template>
 <script>
@@ -38,7 +37,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: '_id' 
+              label: '_id'
             }
           }
         },
@@ -48,7 +47,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'ifaceName' 
+              label: 'ifaceName'
             }
           }
         },
@@ -58,7 +57,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'mac' 
+              label: 'mac'
             }
           }
         },
@@ -68,7 +67,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'ip4' 
+              label: 'ip4'
             }
           }
         },
@@ -79,7 +78,7 @@ export default {
             name: 'Chip',
             bindings: {
               text: 'statusLabel',
-              color: 'statusColor',
+              color: 'statusColor'
             }
           }
         }
@@ -88,9 +87,8 @@ export default {
   },
   computed: {
     ...mapGetters('interfaces', { interfaces: 'find', get: 'get' }),
-    componentItems() {
+    componentItems () {
       return this.interfaces().data.map((item) => {
-
         if (item.operstate === 'up') {
           item = { ...item, statusLabel: 'Started' }
           item = { ...item, statusColor: 'green' }

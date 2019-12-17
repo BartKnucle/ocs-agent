@@ -5,8 +5,7 @@
       :headers="headers"
       :buttons="buttons"
       @componentEvent="onEvent"
-    >
-    </Datatable>
+    />
   </section>
 </template>
 <script>
@@ -26,7 +25,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: '_id' 
+              label: '_id'
             }
           }
         },
@@ -36,7 +35,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'value' 
+              label: 'value'
             }
           }
         }
@@ -45,7 +44,7 @@ export default {
   },
   computed: {
     ...mapGetters('device', { device: 'find', get: 'get' }),
-    componentItems() {
+    componentItems () {
       return Object.entries(this.device().data[0]).map((item) => {
         return { _id: item[0], value: item[1] }
       })

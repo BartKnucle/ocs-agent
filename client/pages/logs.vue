@@ -5,8 +5,7 @@
       :headers="headers"
       :buttons="buttons"
       @componentEvent="onEvent"
-    >
-    </Datatable>
+    />
   </section>
 </template>
 <script>
@@ -32,7 +31,7 @@ export default {
             name: 'Chip',
             bindings: {
               text: 'levelLabel',
-              color: 'levelColor',
+              color: 'levelColor'
             }
           }
         },
@@ -42,7 +41,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'text' 
+              label: 'text'
             }
           }
         },
@@ -52,16 +51,16 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'updatedLabel' 
+              label: 'updatedLabel'
             }
           }
         }
-      ],
+      ]
     }
   },
   computed: {
     ...mapGetters('logger', { logger: 'find', get: 'get' }),
-    componentItems() {
+    componentItems () {
       return this.logger().data.map((item) => {
         switch (item.level) {
           case 0:

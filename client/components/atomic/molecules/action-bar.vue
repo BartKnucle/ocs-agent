@@ -2,7 +2,8 @@
   <Toolbar>
     <v-spacer />
     <Button
-      v-for="(item, index) in items" :key="index"
+      v-for="(item, index) in items"
+      :key="index"
       :item="item"
       @componentEvent="$emit('componentEvent', $event)"
     />

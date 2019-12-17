@@ -16,8 +16,7 @@
             @componentEvent="$emit('componentEvent', $event)"
             :bindings="header.component.bindings"
             :item="item"
-          >
-          </component>
+          />
         </td>
       </tr>
     </template>

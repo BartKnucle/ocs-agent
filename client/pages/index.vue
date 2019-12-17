@@ -5,8 +5,7 @@
       :headers="headers"
       :buttons="buttons"
       @componentEvent="onEvent"
-    >
-    </DataTable>
+    />
   </section>
 </template>
 <script>
@@ -35,7 +34,7 @@ export default {
           component: {
             name: 'Label',
             bindings: {
-              label: 'name' 
+              label: 'name'
             }
           }
         },
@@ -54,18 +53,18 @@ export default {
         {
           _id: 1,
           name: 'Acrobat reader',
-          installed: false,
+          installed: false
         },
         {
           _id: 2,
           name: 'Office 2016',
-          installed: true,
+          installed: true
         }
       ]
     }
   },
   computed: {
-    componentItems() {
+    componentItems () {
       return this.items.map((item) => {
         if (item.installed) {
           item = { ...item, btnLabel: 'Remove' }
@@ -79,7 +78,7 @@ export default {
   mounted () {},
   methods: {
     onEvent (event) {
-      console.log(this.items)
+      // console.log(this.items)
     }
   }
 }

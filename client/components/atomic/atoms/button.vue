@@ -4,12 +4,12 @@
       v-bind="bind"
       @click="sendEvent($event, item)"
     >
-      <v-icon>{{ getValue('icon')}}</v-icon>
+      <v-icon>{{ getValue('icon') }}</v-icon>
       {{ getValue('label') }}
     </v-btn>
   </section>
 </template>
-<script>  
+<script>
 
 export default {
   props: {
@@ -25,14 +25,35 @@ export default {
   data () {
     return {}
   },
+  computed: {
+    isBindings () {
+      if (Object.entries(this.bindings).length !== 0) {
+        return true
+      } else {
+        return false
+      }
+    },
+    bind () {
+      if (this.isBindings) {
+        return Object.entries(this.bindings)
+          .map((item) => {
+            const value = {}
+            value[item[0]] = this.item[item[1]]
+            return value
+          })
+      } else {
+        return this.item
+      }
+    }
+  },
   methods: {
-    sendEvent(event, item) {
+    sendEvent (event, item) {
       this.$emit('componentEvent', {
-        event: event,
-        item: item
+        event,
+        item
       })
     },
-    getValue(value) {
+    getValue (value) {
       try {
         if (this.isBindings) {
           return this.bind.find(item => Object.keys(item)[0] === value)[value]
@@ -41,27 +62,6 @@ export default {
         }
       } catch {
         return null
-      }
-    }
-  },
-  computed: {
-    isBindings() {
-      if (Object.entries(this.bindings).length !== 0) {
-        return true
-      } else {
-        return false
-      }
-    },
-    bind() {
-      if (this.isBindings) {
-        return Object.entries(this.bindings)
-          .map((item) => {
-            let value = {}
-            value[item[0]] = this.item[item[1]]
-            return value
-          })
-      } else {
-        return this.item
       }
     }
   }

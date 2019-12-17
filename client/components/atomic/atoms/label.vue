@@ -20,9 +20,9 @@ export default {
     return {}
   },
   methods: {
-    bind() {
+    bind () {
       return Object.entries(this.bindings).map((item) => {
-        let value = {}
+        const value = {}
         value[item[0]] = this.item[item[1]]
         return value
       })
