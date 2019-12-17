@@ -126,6 +126,11 @@ export default {
         {
           icon: 'mdi-laptop',
           title: 'Status',
+          to: '/status'
+        },
+        {
+          icon: 'mdi-laptop',
+          title: 'Logs',
           to: '/logs'
         },
         {

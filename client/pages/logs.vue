@@ -1,22 +1,29 @@
 <template>
   <section>
-    <List
+    <Datatable
       :items="componentItems"
       :headers="headers"
+      :buttons="buttons"
       @componentEvent="onEvent"
     >
-    </list>
+    </Datatable>
   </section>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import List from '~/components/atomic/molecules/list.vue'
+import Datatable from '~/components/atomic/organisms/data-table.vue'
 export default {
   components: {
-    List
+    Datatable
   },
   data () {
     return {
+      buttons: [
+        {
+          _id: 'clearLogs',
+          label: 'Clear'
+        }
+      ],
       headers: [
         {
           value: 'level',
@@ -58,16 +65,16 @@ export default {
       return this.logger().data.map((item) => {
         switch (item.level) {
           case 0:
-            item.levelLabel = 'Info'
-            item.levelColor = 'yellow'
+            item = { ...item, levelLabel: 'Info' }
+            item = { ...item, levelColor: 'yellow' }
             break
           case 1:
-            item.levelLabel = 'Warning'
-            item.levelColor = 'orange'
+            item = { ...item, levelLabel: 'Warning' }
+            item = { ...item, levelColor: 'orange' }
             break
           case 2:
-            item.levelLabel = 'Error'
-            item.levelColor = 'red'
+            item = { ...item, levelLabel: 'Error' }
+            item = { ...item, levelColor: 'red' }
             break
         }
 
@@ -83,7 +90,14 @@ export default {
   methods: {
     ...mapActions('logger', { findLogger: 'find', removeLogger: 'remove' }),
     onEvent (event) {
-      console.log(event)
+      if (event.item._id === 'clearLogs') {
+        this.clearLog()
+      }
+    },
+    clearLog () {
+      this.removeLogger(null, {
+        query: {}
+      })
     }
   }
 }

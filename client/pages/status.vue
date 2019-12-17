@@ -1,82 +1,98 @@
 <template>
   <section>
-    <v-card>
-      <v-toolbar
-        color="primary"
-      >
-        <v-toolbar-title class="white--text">
-          Status
-        </v-toolbar-title>
-      </v-toolbar>
-      <ListStatus
-        :items="setup().data"
-      />
-    </v-card>
-    <v-card>
-      <v-toolbar
-        color="primary"
-      >
-        <v-toolbar-title class="white--text">
-          Logs
-        </v-toolbar-title>
-        <v-spacer />
-        <v-btn
-          @click="$refs.ListLogs.clear()"
-          icon
-        >
-          <v-icon>
-            mdi-delete
-          </v-icon>
-        </v-btn>
-      </v-toolbar>
-      <ListLogs
-        ref="ListLogs"
-        :logger="logger().data"
-        @clear="clearLog()"
-      />
-    </v-card>
-    {{ logger() }}
+    <Datatable
+      :items="componentItems"
+      :headers="headers"
+      :buttons="buttons"
+      @componentEvent="onEvent"
+    >
+    </Datatable>
   </section>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ListLogs from '~/components/logger/list.vue'
-import ListStatus from '~/components/setup/status.vue'
+import Datatable from '~/components/atomic/organisms/data-table.vue'
 export default {
   components: {
-    ListLogs,
-    ListStatus
+    Datatable
   },
   data () {
-    return {}
+    return {
+      buttons: [],
+      headers: [
+        {
+          value: '_id',
+          text: 'Name',
+          component: {
+            name: 'Label',
+            bindings: {
+              label: '_id' 
+            }
+          }
+        },
+        {
+          value: 'description',
+          text: 'Description',
+          component: {
+            name: 'Label',
+            bindings: {
+              label: 'description' 
+            }
+          }
+        },
+        {
+          value: 'started',
+          text: 'Started',
+          component: {
+            name: 'Chip',
+            bindings: {
+              text: 'startedLabel',
+              color: 'startedColor',
+            }
+          }
+        },
+        {
+          value: 'updated',
+          text: 'Date',
+          component: {
+            name: 'Label',
+            bindings: {
+              label: 'updatedLabel' 
+            }
+          }
+        }
+      ]
+    }
   },
   computed: {
-    ...mapGetters('logger', { logger: 'find', get: 'get' }),
-    ...mapGetters('setup', { setup: 'find', get: 'get' })
+    ...mapGetters('setup', { setup: 'find', get: 'get' }),
+    componentItems() {
+      return this.setup().data.map((item) => {
+
+        if (item.started) {
+          item = { ...item, startedLabel: 'Started' }
+          item = { ...item, startedColor: 'green' }
+        } else {
+          item = { ...item, startedLabel: 'Stopped' }
+          item = { ...item, startedColor: 'red' }
+        }
+
+        if (item.updated) {
+          item.updatedLabel = new Date(item.updated)
+        }
+
+        return item
+      })
+    }
   },
   mounted () {
-    this.findLogger()
     this.findSetup()
   },
   methods: {
-    ...mapActions('logger', { findLogger: 'find', removeLogger: 'remove' }),
     ...mapActions('setup', { findSetup: 'find' }),
-    clearLog () {
-      this.removeLogger(null, {
-        query: {}
-      })
-    }
+    onEvent (event) {}
   }
 }
 </script>
-
 <style>
-.auth-form ul {
-  list-style: none;
-  padding: 0;
-}
-
-.auth-form li + li {
-  margin-top: .5em;
-}
 </style>

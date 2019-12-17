@@ -1,22 +1,34 @@
 <template>
   <section>
-    <List
+    <DataTable
       :items="componentItems"
       :headers="headers"
+      :buttons="buttons"
       @componentEvent="onEvent"
     >
-    </list>
+    </DataTable>
+    {{ items }}
   </section>
 </template>
 <script>
-import List from '~/components/atomic/molecules/list.vue'
+import DataTable from '~/components/atomic/organisms/data-table.vue'
 export default {
   name: 'Software',
   components: {
-    List
+    DataTable
   },
   data () {
     return {
+      buttons: [
+        {
+          label: 'add',
+          color: 'green'
+        },
+        {
+          label: 'filter',
+          color: 'yellow'
+        }
+      ],
       headers: [
         {
           value: 'name',
@@ -48,7 +60,7 @@ export default {
         {
           _id: 2,
           name: 'Office 2016',
-          installed: true
+          installed: true,
         }
       ]
     }
@@ -57,9 +69,9 @@ export default {
     componentItems() {
       return this.items.map((item) => {
         if (item.installed) {
-          item.btnLabel = 'Remove'
-        } else { 
-          item.btnLabel = 'Install'
+          item = { ...item, btnLabel: 'Remove' }
+        } else {
+          item = { ...item, btnLabel: 'Install' }
         }
         return item
       })
@@ -68,7 +80,7 @@ export default {
   mounted () {},
   methods: {
     onEvent (event) {
-      console.log(event)
+      console.log(this.items)
     }
   }
 }
