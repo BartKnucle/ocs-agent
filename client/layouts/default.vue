@@ -109,11 +109,6 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-windows',
-          title: 'New Software',
-          to: '/software'
-        },
-        {
           icon: 'mdi-arrow-up-bold-circle',
           title: 'Updates',
           to: '/updates'
@@ -124,12 +119,17 @@ export default {
           to: '/device'
         },
         {
-          icon: 'mdi-laptop',
+          icon: 'mdi-server-network',
+          title: 'Network',
+          to: '/network'
+        },
+        {
+          icon: 'mdi-check-all',
           title: 'Status',
           to: '/status'
         },
         {
-          icon: 'mdi-laptop',
+          icon: 'mdi-view-headline',
           title: 'Logs',
           to: '/logs'
         },
