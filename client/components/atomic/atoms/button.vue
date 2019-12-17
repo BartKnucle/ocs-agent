@@ -4,7 +4,7 @@
       v-bind="bind"
       @click="sendEvent($event, item)"
     >
-      <v-icon>{{ getValue('icon') }}</v-icon>
+      <v-icon>{{ getValue('btnIcon') }}</v-icon>
       {{ getValue('label') }}
     </v-btn>
   </section>
