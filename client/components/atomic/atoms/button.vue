@@ -50,7 +50,8 @@ export default {
     sendEvent (event, item) {
       this.$emit('componentEvent', {
         event,
-        item
+        item,
+        eventName: this.bindings.event
       })
     },
     getValue (value) {
