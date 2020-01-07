@@ -1,5 +1,7 @@
 <template>
-  <Toolbar>
+  <Toolbar
+    v-if="items.length !== 0"
+  >
     <slot />
     <Button
       v-for="(item, index) in items"

@@ -45,9 +45,13 @@ export default {
   computed: {
     ...mapGetters('device', { device: 'find', get: 'get' }),
     componentItems () {
-      return Object.entries(this.device().data[0]).map((item) => {
-        return { _id: item[0], value: item[1] }
-      })
+      if (this.device().data[0]) {
+        return Object.entries(this.device().data[0]).map((item) => {
+          return { _id: item[0], value: item[1] }
+        })
+      } else {
+        return []
+      }
     }
   },
   mounted () {
