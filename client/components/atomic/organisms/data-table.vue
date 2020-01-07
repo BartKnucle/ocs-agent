@@ -1,12 +1,22 @@
 <template>
   <Card>
-    <ActionBar
-      :items="buttons"
-      @componentEvent="$emit('componentEvent', $event)"
-    />
+    <v-card-title>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-search"
+        label="Search"
+        single-line
+        hide-details
+      />
+      <ActionBar
+        :items="buttons"
+        @componentEvent="$emit('componentEvent', $event)"
+      />
+    </v-card-title>
     <List
       :headers="headers"
       :items="items"
+      :search="search"
       @componentEvent="$emit('componentEvent', $event)"
     />
   </Card>
@@ -36,7 +46,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      search: ''
+    }
   },
   methods: {}
 }

@@ -1,6 +1,6 @@
 <template>
   <Toolbar>
-    <v-spacer />
+    <slot />
     <Button
       v-for="(item, index) in items"
       :key="index"
