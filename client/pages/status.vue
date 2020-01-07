@@ -20,6 +20,17 @@ export default {
       buttons: [],
       headers: [
         {
+          value: 'started',
+          text: 'Started',
+          component: {
+            name: 'Chip',
+            bindings: {
+              text: 'startedLabel',
+              color: 'startedColor'
+            }
+          }
+        },
+        {
           value: '_id',
           text: 'Name',
           component: {
@@ -36,17 +47,6 @@ export default {
             name: 'Label',
             bindings: {
               label: 'description'
-            }
-          }
-        },
-        {
-          value: 'started',
-          text: 'Started',
-          component: {
-            name: 'Chip',
-            bindings: {
-              text: 'startedLabel',
-              color: 'startedColor'
             }
           }
         },
