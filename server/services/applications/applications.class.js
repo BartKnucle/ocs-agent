@@ -4,18 +4,34 @@ const { exec } = require('child_process')
 const Shell = require('node-powershell')
 const ServiceClass = require('../service.class')
 
-exports.Software = class Software extends ServiceClass {
-  setup (app) {
-    //  Check if the cache directory exist create it if not
-    if (!fs.existsSync('./server/data/cache/software')) {
-      fs.mkdirSync('./server/data/cache/software', { recursive: true })
-    }
-
-    super.setup(app)
+exports.Applications = class Applications extends ServiceClass {
+  constructor (options, app) {
+    super(options, app)
+    this.remote = '/api/applications'
   }
 
-  // Check server for new software
-  check () {}
+  setup (app) {
+    app.service('/api/client').on('started', () => {
+      //  Check if the cache directory exist create it if not
+      if (!fs.existsSync('./server/data/cache/applications')) {
+        fs.mkdirSync('./server/data/cache/applications', { recursive: true })
+      }
+
+      super.setup(app)
+      this.check()
+    })
+  }
+
+  // Add events on remote applications service to update the local service
+  check () {
+    const remoteService = this.app.client.service(this.remote)
+
+    remoteService.on('created', data => {
+      this.create(data)
+    })
+    remoteService.on('updated', data => console.log('updated a application', data))
+    remoteService.on('patched', data => console.log('patched a application', data))
+  }
 
   // Process a software installation
   install (id) {
@@ -28,15 +44,15 @@ exports.Software = class Software extends ServiceClass {
         this.extract(id)
       }
 
-      this.get(id).then((software) => {
+      this.get(id).then((application) => {
         //  Install software
         this.patch(id, { status: 'Running command' })
-        switch (software.install_type) {
+        switch (application.install_type) {
           case 'powershell':
-            this.execPS(software.install_command)
+            this.execPS(application.install_command)
             break
           case 'cmd':
-            this.execCMD(software.install_command)
+            this.execCMD(application.install_command)
             break
           default:
             break
@@ -63,12 +79,12 @@ exports.Software = class Software extends ServiceClass {
 
   async detect (id) {
     this.patch(id, { status: 'Detecting' })
-    const software = await this.get(id)
-    switch (software.detect_type) {
+    const application = await this.get(id)
+    switch (application.detect_type) {
       case 'powershell':
-        return this.execPS(id, software.detect_command)
+        return this.execPS(id, application.detect_command)
       case 'cmd':
-        return this.execCMD(id, software.detect_command)
+        return this.execCMD(id, application.detect_command)
     }
   }
 
@@ -79,7 +95,7 @@ exports.Software = class Software extends ServiceClass {
       noProfile: true
     })
 
-    ps.addCommand('./server/data/cache/software/' + id + '/' + command)
+    ps.addCommand('./server/data/cache/applications/' + id + '/' + command)
     ps.invoke()
       .then((output) => {
         ps.dispose()
@@ -91,7 +107,7 @@ exports.Software = class Software extends ServiceClass {
   }
 
   execCMD (id, command) {
-    const scriptPath = path.join(this.app.get('cachePath'), 'software', id, command)
+    const scriptPath = path.join(this.app.get('cachePath'), 'applications', id, command)
     exec('sh ' + scriptPath, (error, stdout, stderr) => {
       if (error) {
         throw error

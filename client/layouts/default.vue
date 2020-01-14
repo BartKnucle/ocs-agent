@@ -104,8 +104,8 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-windows',
-          title: 'Software',
+          icon: 'mdi-package-variant',
+          title: 'Applications',
           to: '/'
         },
         {

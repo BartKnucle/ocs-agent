@@ -28,13 +28,18 @@ const services = [
     started: false
   },
   {
-    _id: 'software',
-    description: 'Software service',
+    _id: 'applications',
+    description: 'Applications service',
     started: false
   },
   {
     _id: 'updates',
     description: 'Updates service',
+    started: false
+  },
+  {
+    _id: 'download',
+    description: 'Download service',
     started: false
   }
 ]

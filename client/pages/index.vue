@@ -9,6 +9,7 @@
   </section>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import DataTable from '~/components/atomic/organisms/data-table.vue'
 export default {
   name: 'Software',
@@ -48,24 +49,13 @@ export default {
             }
           }
         }
-      ],
-      items: [
-        {
-          _id: 1,
-          name: 'Acrobat reader',
-          installed: false
-        },
-        {
-          _id: 2,
-          name: 'Office 2016',
-          installed: true
-        }
       ]
     }
   },
   computed: {
+    ...mapGetters('applications', { applications: 'find', get: 'get' }),
     componentItems () {
-      return this.items.map((item) => {
+      return this.applications().data.map((item) => {
         if (item.installed) {
           item = { ...item, btnLabel: 'Remove' }
         } else {
@@ -75,8 +65,11 @@ export default {
       })
     }
   },
-  mounted () {},
+  mounted () {
+    this.findApplications()
+  },
   methods: {
+    ...mapActions('applications', { findApplications: 'find' }),
     onEvent (event) {
       // console.log(this.items)
     }
