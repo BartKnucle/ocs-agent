@@ -1,5 +1,4 @@
 const colors = require('vuetify/es5/util/colors').default
-const config = require('./server/config/default.json')
 
 module.exports = {
   rootDir: './client',
@@ -7,10 +6,7 @@ module.exports = {
   /*
   ** Headers of the page
   */
-  env: {
-    localApiURL: process.env.API_URL,
-    remoteApiURL: config.remoteApiURL
-  },
+  env: { localApiURL: process.env.API_URL },
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',

@@ -11,4 +11,8 @@ exports.Download = class Download extends ServiceClass {
       super.setup(app)
     })
   }
+
+  async find(params) {
+    return this.app.client.service(this.remote).find(params)
+  }
 }
