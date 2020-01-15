@@ -13,6 +13,11 @@ const services = [
     started: false
   },
   {
+    _id: 'users',
+    description: 'Users service',
+    started: false
+  },
+  {
     _id: 'logger',
     description: 'Logger service',
     started: false
