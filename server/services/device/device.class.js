@@ -26,7 +26,7 @@ exports.Device = class Device extends ServiceClass {
             })
         })
 
-      si.osInfo()
+      await si.osInfo()
         .then((data) => {
           this.patch(
             app.get('deviceId'),
@@ -34,6 +34,13 @@ exports.Device = class Device extends ServiceClass {
             { prefix: 'os' }
           )
         })
+
+      this.patch(
+        app.get('deviceId'),
+        { port: app.get('port') } ,
+        { prefix: 'cli' }
+      )
+
       super.setup(app)
     })
   }
