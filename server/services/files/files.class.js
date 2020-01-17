@@ -1,4 +1,6 @@
 const ServiceClass = require('../service.class')
+const fs = require('fs')
+const path = require('path')
 
 exports.Files = class Files extends ServiceClass {
   constructor (options, app) {
@@ -13,6 +15,31 @@ exports.Files = class Files extends ServiceClass {
         fs.mkdirSync(path.join(app.get('homePath'), '/files/'))
       }
     })
+  }
+
+  // Sync files and database
+  clear() {
+    fs.readdir(path.join(this.app.get('homePath'), '/files/'), (err, files) => {
+      files.map((file) => {
+        //  Remove local file
+        this.get(file)
+          .catch(() => {
+            fs.unlink(path.join(this.app.get('homePath'), '/files/' + file), (err) => {})
+          })
+      })
+    })
+
+    //  Remove database record if the file isnot present
+    this.find()
+      .then((files) => {
+        files.map((file) => {
+          fs.exists(path.join(this.app.get('homePath'), '/files/' + file._id), (exist) => {
+            if (!exist) {
+              this.remove(file._id)
+            }
+          })
+        })
+      })
   }
 
   listDps() {
