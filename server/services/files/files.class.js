@@ -1,9 +1,6 @@
 const ServiceClass = require('../service.class')
-const https = require('https')
-const fs = require('fs')
-const path = require('path')
 
-exports.Download = class Download extends ServiceClass {
+exports.Files = class Files extends ServiceClass {
   constructor (options, app) {
     super(options, app)
     this.remote = '/api/devicesdps'

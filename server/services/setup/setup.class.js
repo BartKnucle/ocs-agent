@@ -43,8 +43,8 @@ const services = [
     started: false
   },
   {
-    _id: 'download',
-    description: 'Download service',
+    _id: 'files',
+    description: 'Files service',
     started: false
   }
 ]
