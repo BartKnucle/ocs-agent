@@ -7,6 +7,7 @@ const device = require('./device/device.service')
 const interfaces = require('./interfaces/interfaces.service')
 const applications = require('./applications/applications.service')
 const updates = require('./updates/updates.service')
+const files = require('./files/files.service')
 const download = require('./download/download.service')
 
 module.exports = (app) => {
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.configure(interfaces)
   app.configure(applications)
   app.configure(updates)
+  app.configure(files)
   app.configure(download)
   app.configure(client)
 }

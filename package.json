@@ -41,6 +41,7 @@
     "fast-deep-equal": "^2.0.1",
     "feathers-nedb": "^5.1.0",
     "feathers-vuex": "^2.3.1",
+    "multer": "^1.4.2",
     "nedb": "^1.8.0",
     "node-powershell": "^4.0.0",
     "nuxt": "^2.10.2",
