@@ -1,4 +1,3 @@
-const path = require('path')
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
 const iconpath = './client/static/v.png'
 
