@@ -1,8 +1,8 @@
+const path = require('path')
+const multer = require('multer')
 const createModel = require('../../models/files.model')
 const { Files } = require('./files.class')
 const hooks = require('./files.hooks')
-const path = require('path')
-const multer = require('multer')
 
 module.exports = (app) => {
   const options = {
@@ -26,8 +26,8 @@ module.exports = (app) => {
   })
 
   app.get('/files:file(*)', (req, res) => {
-    var file = req.params.file
-    var fileLocation = path.join(app.get('homePath'), '/files/', file)
+    const file = req.params.file
+    const fileLocation = path.join(app.get('homePath'), '/files/', file)
     res.download(fileLocation, file)
   })
 }

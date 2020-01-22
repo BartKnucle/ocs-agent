@@ -1,6 +1,6 @@
 const getConsole = (options = {}) => {
   return (context) => {
-    console.log(context.data)
+    //  console.log(context.data)
     return context
   }
 }

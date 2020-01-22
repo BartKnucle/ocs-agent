@@ -37,7 +37,7 @@ exports.Device = class Device extends ServiceClass {
 
       this.patch(
         app.get('deviceId'),
-        { port: app.get('port') } ,
+        { port: app.get('port') },
         { prefix: 'cli' }
       )
 

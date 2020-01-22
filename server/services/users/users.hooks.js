@@ -5,13 +5,13 @@ const setOnline = (options = {}) => {
     if (context.app.service('/api/devices')) {
       if (context.id !== undefined) {
         context.app.service('/api/devices')
-        .create({ _id: context.id, online: context.data.online })
-        .catch(() => {
-          context.app.service('/api/devices').patch(
-            context.id,
-            { online: context.data.online }
-          )
-        })
+          .create({ _id: context.id, online: context.data.online })
+          .catch(() => {
+            context.app.service('/api/devices').patch(
+              context.id,
+              { online: context.data.online }
+            )
+          })
       }
     }
     return context

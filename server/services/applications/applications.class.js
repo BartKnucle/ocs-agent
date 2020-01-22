@@ -1,4 +1,3 @@
-const fs = require('fs')
 const path = require('path')
 const { exec } = require('child_process')
 const Shell = require('node-powershell')
@@ -13,9 +12,9 @@ exports.Applications = class Applications extends ServiceClass {
   setup (app) {
     app.service('/api/client').on('started', () => {
       //  Check if the cache directory exist create it if not
-      /*if (!fs.existsSync('./server/data/cache/applications')) {
+      /*  if (!fs.existsSync('./server/data/cache/applications')) {
         fs.mkdirSync('./server/data/cache/applications', { recursive: true })
-      }*/
+      } */
 
       super.setup(app)
       this.check()
@@ -26,11 +25,11 @@ exports.Applications = class Applications extends ServiceClass {
   check () {
     const remoteService = this.app.client.service(this.remote)
 
-    remoteService.on('created', data => {
+    remoteService.on('created', (data) => {
       this.create(data)
     })
-    remoteService.on('updated', data => console.log('updated a application', data))
-    remoteService.on('patched', data => console.log('patched a application', data))
+    //  remoteService.on('updated', data => console.log('updated a application', data))
+    //  remoteService.on('patched', data => console.log('patched a application', data))
   }
 
   // Process a software installation

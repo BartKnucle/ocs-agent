@@ -51,4 +51,3 @@ exports.start = function start () {
     badge: true
   })
 }
-
