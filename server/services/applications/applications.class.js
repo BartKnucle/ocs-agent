@@ -13,9 +13,9 @@ exports.Applications = class Applications extends ServiceClass {
   setup (app) {
     app.service('/api/client').on('started', () => {
       //  Check if the cache directory exist create it if not
-      if (!fs.existsSync('./server/data/cache/applications')) {
+      /*if (!fs.existsSync('./server/data/cache/applications')) {
         fs.mkdirSync('./server/data/cache/applications', { recursive: true })
-      }
+      }*/
 
       super.setup(app)
       this.check()

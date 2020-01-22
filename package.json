@@ -4,15 +4,24 @@
   "description": "Open configuration managment agent",
   "author": "Sébastien JARDE",
   "private": true,
+  "main": "index.js",
   "build": {
     "appId": "ocs-client.id",
     "mac": {
-      "category": "configuration.managment"
+      "category": "configuration.managment.client"
     },
     "directories": {
       "buildResources": "pack",
       "output": "pack"
-    }
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true
+    },
+    "extraFiles": [
+      "client",
+      "config"
+    ]
   },
   "scripts": {
     "electron": "electron .",
@@ -23,7 +32,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "nuxt build && electron-builder"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "^4.4.3",

@@ -1,7 +1,6 @@
 const path = require('path')
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
 const iconpath = path.join(__dirname, '/static/v.png')
-const server = require('./server')
 
 let window
 let tray
@@ -9,6 +8,8 @@ let icon
 let contextMenu
 
 const createWindow = async () => {
+  process.env.NODE_ENV = 'production'
+  const server = require('./server')
   await server.start()
 
   // Tray icon and menu
@@ -39,7 +40,8 @@ const createWindow = async () => {
     height: 768,
     frame: true,
     resizable: false,
-    icon: iconpath
+    icon: iconpath,
+    enableRemoteModule: true
   })
 
   window.setMenu(null)
