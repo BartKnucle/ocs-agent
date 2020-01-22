@@ -13,7 +13,6 @@ const createWindow = async () => {
   await server.start()
 
   // Tray icon and menu
-  console.log(iconpath)
   icon = nativeImage.createFromPath(iconpath)
   tray = new Tray(icon)
 
