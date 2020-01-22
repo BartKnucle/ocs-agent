@@ -96,12 +96,12 @@ exports.Files = class Files extends ServiceClass {
         const url = 'https://' + dps.data[0].net_ip4 + ':3001/files/' + fileId
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
         https.get(url, (response) => {
-          const len = parseInt(response.headers['content-length'], 10)
+          //  const len = parseInt(response.headers['content-length'], 10)
           //  const total = len / 1048576 //  1048576 - bytes in  1Megabyte
           //  let cur = 0
 
           response.on('data', (chunk) => {
-            cur += chunk.length
+            //  cur += chunk.length
             //  console.log('Downloading ' + (100.0 * cur / len).toFixed(2) + '% ' + (cur / 1048576).toFixed(2) + ' Total size: ' + total.toFixed(2) + ' mb')
           })
 
