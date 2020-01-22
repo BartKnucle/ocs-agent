@@ -1,6 +1,6 @@
 const path = require('path')
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
-const iconpath = path.join(__dirname, '/static/v.png')
+const iconpath = path.join(__dirname, '/client/static/v.png')
 
 let window
 let tray
