@@ -20,6 +20,7 @@ exports.Device = class Device extends ServiceClass {
             .catch(() => {
               this.create({
                 _id: app.get('deviceId'),
+                online: true,
                 ...data
               },
               { prefix: 'sys' })
