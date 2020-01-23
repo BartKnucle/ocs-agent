@@ -8,7 +8,8 @@ exports.Client = class Client extends ServiceClass {
   setup (app) {
     app.service('/api/logger').on('started', () => {
       let credentials = {
-        _id: app.get('deviceId')
+        _id: app.get('deviceId'),
+        type: 'device'
       }
 
       const socket = io(app.get('remoteApiURL'), { secure: true, reconnect: true, rejectUnauthorized: false })
