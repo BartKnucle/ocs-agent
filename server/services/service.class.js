@@ -39,14 +39,14 @@ module.exports = class ServiceClass extends Service {
         started: false
       }
     )
-    .catch(() => {
-      this.app.service('/api/setup').create(
-        {
-          _id: this.name,
-          started: false
-        }
-      )
-    })
+      .catch(() => {
+        this.app.service('/api/setup').create(
+          {
+            _id: this.name,
+            started: false
+          }
+        )
+      })
     this.emit('stopped', this.name)
   }
 }
