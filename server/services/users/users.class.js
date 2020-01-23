@@ -8,21 +8,29 @@ exports.Users = class Users extends ServiceClass {
     super.setup(app)
   }
 
-  //  On user connection
-  onConnect (authResult) {
+  setOnline (userId) {
     return this.patch(
-      authResult.user._id,
+      userId,
       { online: true }
     )
+  }
+
+  setOffline (userId) {
+    return this.patch(
+      userId,
+      { online: false }
+    )
+  }
+
+  //  On user connection
+  onConnect (authResult) {
+    return this.setOnline(authResult.user._id)
   }
 
   //  On user diconnection
   onDisconnect (connection) {
     if (connection.user) {
-      return this.patch(
-        connection.user._id,
-        { online: false }
-      )
+      return this.setOffline(connection.user._id)
         .catch(() => {
           return false
         })
