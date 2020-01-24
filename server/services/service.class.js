@@ -14,39 +14,48 @@ module.exports = class ServiceClass extends Service {
   // Service started event
   started () {
     //  Set the setup api informations
-    this.app.service('/api/setup').patch(
+    return this.app.service('/api/setup').patch(
       this.name,
       {
         started: true
       }
-    ).catch(() => {
-      this.app.service('/api/setup').create(
-        {
-          _id: this.name,
-          started: true
-        }
-      )
-    })
-    this.emit('started', this.name)
+    )
+      .then(() => {
+        this.emit('started', this.name)
+      })
+      .catch(() => {
+        return this.app.service('/api/setup').create(
+          {
+            _id: this.name,
+            started: true
+          }
+        ).then(() => {
+          this.emit('started', this.name)
+        })
+      })
   }
 
   // Service stopped event
   stopped () {
     //  Set the setup api informations
-    this.app.service('/api/setup').patch(
+    return this.app.service('/api/setup').patch(
       this.name,
       {
         started: false
       }
     )
+      .then(() => {
+        this.emit('stopped', this.name)
+      })
       .catch(() => {
-        this.app.service('/api/setup').create(
+        return this.app.service('/api/setup').create(
           {
             _id: this.name,
             started: false
           }
-        )
+        ).then(() => {
+          this.emit('stopped', this.name)
+        })
       })
-    this.emit('stopped', this.name)
   }
 }

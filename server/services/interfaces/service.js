@@ -1,6 +1,6 @@
 const createModel = require('../../models/interfaces.model')
-const { Interfaces } = require('./interfaces.class')
-const hooks = require('./interfaces.hooks')
+const { Interfaces } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {

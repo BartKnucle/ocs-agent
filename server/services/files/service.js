@@ -1,8 +1,8 @@
 const path = require('path')
 const multer = require('multer')
 const createModel = require('../../models/files.model')
-const { Files } = require('./files.class')
-const hooks = require('./files.hooks')
+const { Files } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {

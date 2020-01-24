@@ -1,23 +1,19 @@
-const setup = require('./setup/setup.service')
-const logger = require('./logger/logger.service')
-const users = require('./users/users.service')
-const authentication = require('./authentication/authentication.service')
-const client = require('./client/client.service')
-const device = require('./device/device.service')
-const interfaces = require('./interfaces/interfaces.service')
-const applications = require('./applications/applications.service')
-const updates = require('./updates/updates.service')
-const files = require('./files/files.service')
+const { Services } = require('./services.class')
 
 module.exports = (app) => {
-  app.configure(setup)
-  app.configure(logger)
-  app.configure(users)
-  app.configure(authentication)
-  app.configure(device)
-  app.configure(interfaces)
-  app.configure(applications)
-  app.configure(updates)
-  app.configure(files)
-  app.configure(client)
+  const servicesList = [
+    'setup',
+    'logger',
+    'users',
+    'authentication',
+    'device',
+    'interfaces',
+    'applications',
+    'updates',
+    'files',
+    'client'
+  ]
+
+  const services = new Services(app, servicesList)
+  services.setup()
 }

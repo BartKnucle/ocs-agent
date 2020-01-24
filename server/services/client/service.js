@@ -1,6 +1,6 @@
 const createModel = require('../../models/client.model')
-const { Client } = require('./client.class')
-const hooks = require('./client.hooks')
+const { Client } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {

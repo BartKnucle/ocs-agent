@@ -1,6 +1,6 @@
 const createModel = require('../../models/device.model')
-const { Device } = require('./device.class')
-const hooks = require('./device.hooks')
+const { Device } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {

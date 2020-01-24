@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const testPath = path.join(require('os').homedir(), '.ocs-agent', 'test', 'setup')
 const app = require('@/test/setup/feathers')
-const setup = require('@/server/services/setup/setup.service')
+const setup = require('@/server/services/setup/service')
 app.set('homePath', testPath)
 app.configure(setup)
 

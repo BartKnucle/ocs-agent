@@ -1,6 +1,6 @@
 const createModel = require('../../models/updates.model')
-const { Updates } = require('./updates.class')
-const hooks = require('./updates.hooks')
+const { Updates } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {
