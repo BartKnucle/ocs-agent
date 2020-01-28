@@ -35,6 +35,7 @@
     "dist": "nuxt build && electron-builder"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@feathersjs/authentication-client": "^4.4.3",
     "@feathersjs/authentication-local": "^4.4.3",
     "@feathersjs/authentication-oauth": "^4.4.3",
