@@ -4,6 +4,7 @@ const defaultGateway = require('default-gateway')
 const ServiceClass = require('../service.class')
 
 exports.Interfaces = class Interfaces extends ServiceClass {
+  /* istanbul ignore next */
   setup (app) {
     app.service('/api/device').on('started', () => {
       setInterval(this.updateIfaces.bind(this), 10000)
@@ -31,9 +32,12 @@ exports.Interfaces = class Interfaces extends ServiceClass {
               })
           })
       })
-      .catch(() => { // No default gateway, we return nothing
-        return []
-      })
+      .catch(
+        /* istanbul ignore next */
+        () => { // No default gateway, we return nothing
+          return []
+        }
+      )
   }
 
   //  Get interfaces names only
@@ -55,31 +59,41 @@ exports.Interfaces = class Interfaces extends ServiceClass {
   }
 
   //  Add interfaces to database
-  addInterfaces () {
-    return this.getInterfaces()
-      .then((interfaces) => {
-        interfaces.forEach((iface) => {
-          this.get(iface._id)
-            .then(() => {
-              this.update(iface._id, iface)
-            })
-            .catch(() => {
-              this.create(iface)
-            })
-        })
-      })
+  async addInterfaces () {
+    const interfaces = await this.getInterfaces()
+
+    interfaces.forEach((iface) => {
+      this.addInterface(iface)
+    })
+  }
+
+  //  Add unique interface
+  addInterface (iface) {
+    this.get(iface._id)
+      .then(
+        /* istanbul ignore next */
+        () => {
+          this.update(iface._id, iface)
+        }
+      )
+      .catch(
+        /* istanbul ignore next */
+        () => {
+          this.create(iface)
+        }
+      )
   }
 
   //  Remove old interfaces
   removeOldInterfaces () {
     return this.getInterfacesNames()
-      .then((name) => {
+      .then((interfaces) => {
         return this.remove(
           null,
           {
             query: {
               _id: {
-                $nin: name
+                $nin: interfaces
               }
             }
           }
@@ -95,6 +109,7 @@ exports.Interfaces = class Interfaces extends ServiceClass {
   }
 
   // TO BE REMOVED
+  /* istanbul ignore next */
   updateIfacesOld () {
     return si.networkInterfaces()
       .then(async (interfaces) => {

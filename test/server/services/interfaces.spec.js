@@ -1,38 +1,28 @@
-const path = require('path')
-const fs = require('fs')
-const testPath = path.join(require('os').homedir(), '.ocs-agent', 'test', 'interfaces')
 const app = require('@/test/setup/feathers')
-const device = require('@/server/services/device/service')
 const interfaces = require('@/server/services/interfaces/service')
-app.set('homePath', testPath)
-app.configure(device)
 app.configure(interfaces)
 
-beforeAll(() => {
-  fs.rmdirSync(testPath, { recursive: true })
-})
-
 describe('\'interfaces\' service', () => {
-  it('Service setup', (done) => {
-    app.service('/api/interfaces').setup(app)
-    done()
+  it('Get interfaces list', async () => {
+    const interfaces = await app.service('/api/interfaces').getInterfaces()
+    expect(interfaces.length).toBeTruthy()
   })
 
-  it('Service created', () => {
-    expect(app.services).toHaveProperty('api/interfaces')
+  it('Get the interfaces names', async () => {
+    const interfaces = await app.service('/api/interfaces').getInterfacesNames()
+    expect(interfaces).toBeTruthy()
   })
 
-  it('Update interfaces', () => {
-    app.service('/api/interfaces').updateIfaces()
-      .then(() => {
-        return app.service('/api/interfaces').find()
-      })
-      .then((interfaces) => {
-        expect(interfaces.length).toBe(!0)
-      })
+  it('Get the default interface', async () => {
+    const iface = await app.service('/api/interfaces').getDefaultInterface()
+    expect(iface).toBeTruthy()
   })
-})
 
-afterAll(() => {
-  fs.rmdirSync(testPath, { recursive: true })
+  it('Add interfaces', async () => {
+    await app.service('/api/interfaces').addInterfaces()
+  })
+
+  it('Update interfaces', async () => {
+    await app.service('/api/interfaces').updateIfaces()
+  })
 })

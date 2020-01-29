@@ -4,16 +4,19 @@ const updateDevice = (options = {}) => {
   return (context) => {
     // If the interface is the default one, we update the device
     if (context.result.default) {
-      context.app.service('/api/device').patch(
-        context.app.get('deviceId'),
-        {
-          ip4: context.result.ip4,
-          ip4_subnet: context.result.ip4_subnet,
-          ip6_subnet: context.result.ip6_subnet,
-          gatewayV4: context.result.gateway
-        },
-        { prefix: 'net' }
-      )
+      if (context.app.service('/api/device')) {
+        /* istanbul ignore next */
+        context.app.service('/api/device').patch(
+          context.app.get('deviceId'),
+          {
+            ip4: context.result.ip4,
+            ip4_subnet: context.result.ip4_subnet,
+            ip6_subnet: context.result.ip6_subnet,
+            gatewayV4: context.result.gateway
+          },
+          { prefix: 'net' }
+        )
+      }
     }
     return context
   }
