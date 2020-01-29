@@ -4,7 +4,7 @@ const defaultGateway = require('default-gateway')
 const ServiceClass = require('../service.class')
 
 exports.Interfaces = class Interfaces extends ServiceClass {
-  async setup (app) {
+  setup (app) {
     app.service('/api/device').on('started', () => {
       setInterval(this.updateIfaces.bind(this), 10000)
       super.setup(app)
@@ -18,14 +18,17 @@ exports.Interfaces = class Interfaces extends ServiceClass {
         return si.networkInterfaces()
           .then((interfaces) => {
             return interfaces.filter(iface => !iface.virtual && iface.ip4 !== '127.0.0.1')
-            .map((iface) => {
-              iface._id = iface.iface
-              iface.default = iface.iface === defaultIface.interface ? true : false
-              iface.ip4_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip4).cidr
-              iface.ip6_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip6).cidr
-              const { duplex, speed, mtu, carrierChanges, ...rest } = iface
-              return rest
-            })
+              .map((iface) => {
+                iface._id = iface.iface
+                iface.default = iface.iface === defaultIface.interface
+                if (iface.default) {
+                  iface.gateway = defaultIface.gateway
+                }
+                iface.ip4_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip4).cidr
+                iface.ip6_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip6).cidr
+                const { duplex, speed, mtu, carrierChanges, ...rest } = iface
+                return rest
+              })
           })
       })
       .catch(() => { // No default gateway, we return nothing
@@ -36,11 +39,11 @@ exports.Interfaces = class Interfaces extends ServiceClass {
   //  Get interfaces names only
   getInterfacesNames () {
     return this.getInterfaces()
-    .then((interfaces) => {
-      return interfaces.map((iface) => {
-        return iface.iface
+      .then((interfaces) => {
+        return interfaces.map((iface) => {
+          return iface.iface
+        })
       })
-    })
   }
 
   //  Get the default interface
@@ -55,7 +58,7 @@ exports.Interfaces = class Interfaces extends ServiceClass {
   addInterfaces () {
     return this.getInterfaces()
       .then((interfaces) => {
-        interfaces.forEach(iface => {
+        interfaces.forEach((iface) => {
           this.get(iface._id)
             .then(() => {
               this.update(iface._id, iface)
@@ -84,14 +87,14 @@ exports.Interfaces = class Interfaces extends ServiceClass {
       })
   }
 
-  updateIfaces() {
+  updateIfaces () {
     return this.removeOldInterfaces()
       .then(() => {
         return this.addInterfaces()
       })
   }
 
-  // Update the interfaces list
+  // TO BE REMOVED
   updateIfacesOld () {
     return si.networkInterfaces()
       .then(async (interfaces) => {

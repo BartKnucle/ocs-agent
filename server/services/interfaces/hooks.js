@@ -1,5 +1,24 @@
 const dataChanged = require('../../hooks/dataChanged')
 
+const updateDevice = (options = {}) => {
+  return (context) => {
+    // If the interface is the default one, we update the device
+    if (context.result.default) {
+      context.app.service('/api/device').patch(
+        context.app.get('deviceId'),
+        {
+          ip4: context.result.ip4,
+          ip4_subnet: context.result.ip4_subnet,
+          ip6_subnet: context.result.ip6_subnet,
+          gatewayV4: context.result.gateway
+        },
+        { prefix: 'net' }
+      )
+    }
+    return context
+  }
+}
+
 module.exports = {
   before: {
     all: [],
@@ -15,9 +34,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [updateDevice()],
+    update: [updateDevice()],
+    patch: [updateDevice()],
     remove: []
   },
 
