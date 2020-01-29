@@ -4,15 +4,95 @@ const defaultGateway = require('default-gateway')
 const ServiceClass = require('../service.class')
 
 exports.Interfaces = class Interfaces extends ServiceClass {
-  setup (app) {
+  async setup (app) {
     app.service('/api/device').on('started', () => {
       setInterval(this.updateIfaces.bind(this), 10000)
       super.setup(app)
     })
   }
 
+  //  Get the computer network interfaces
+  getInterfaces () {
+    return defaultGateway.v4()
+      .then((defaultIface) => {
+        return si.networkInterfaces()
+          .then((interfaces) => {
+            return interfaces.filter(iface => !iface.virtual && iface.ip4 !== '127.0.0.1')
+            .map((iface) => {
+              iface._id = iface.iface
+              iface.default = iface.iface === defaultIface.interface ? true : false
+              iface.ip4_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip4).cidr
+              iface.ip6_subnet = os.networkInterfaces()[iface.iface].find(x => x.address === iface.ip6).cidr
+              const { duplex, speed, mtu, carrierChanges, ...rest } = iface
+              return rest
+            })
+          })
+      })
+      .catch(() => { // No default gateway, we return nothing
+        return []
+      })
+  }
+
+  //  Get interfaces names only
+  getInterfacesNames () {
+    return this.getInterfaces()
+    .then((interfaces) => {
+      return interfaces.map((iface) => {
+        return iface.iface
+      })
+    })
+  }
+
+  //  Get the default interface
+  getDefaultInterface () {
+    return this.getInterfaces()
+      .then((interfaces) => {
+        return interfaces.find(iface => iface.default)
+      })
+  }
+
+  //  Add interfaces to database
+  addInterfaces () {
+    return this.getInterfaces()
+      .then((interfaces) => {
+        interfaces.forEach(iface => {
+          this.get(iface._id)
+            .then(() => {
+              this.update(iface._id, iface)
+            })
+            .catch(() => {
+              this.create(iface)
+            })
+        })
+      })
+  }
+
+  //  Remove old interfaces
+  removeOldInterfaces () {
+    return this.getInterfacesNames()
+      .then((name) => {
+        return this.remove(
+          null,
+          {
+            query: {
+              _id: {
+                $nin: name
+              }
+            }
+          }
+        )
+      })
+  }
+
+  updateIfaces() {
+    return this.removeOldInterfaces()
+      .then(() => {
+        return this.addInterfaces()
+      })
+  }
+
   // Update the interfaces list
-  updateIfaces () {
+  updateIfacesOld () {
     return si.networkInterfaces()
       .then(async (interfaces) => {
         //  Remove interfaces not new data
