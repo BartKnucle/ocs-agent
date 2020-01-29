@@ -5,6 +5,7 @@ const app = require('@/test/setup/feathers')
 const setup = require('@/server/services/setup/service')
 const logger = require('@/server/services/logger/service')
 app.set('homePath', testPath)
+app.set('deviceId', '123456')
 app.configure(setup)
 app.configure(logger)
 
@@ -13,9 +14,9 @@ beforeAll(() => {
 })
 
 describe('\'logger\' service', () => {
-  it('Service setup', (done) => {
+  it('Service setup', () => {
     app.service('/api/logger').setup(app)
-    done()
+    app.service('/api/setup').emit('started', 'setup')
   })
 
   it('Service created', () => {
