@@ -1,6 +1,7 @@
 const ServiceClass = require('../service.class')
 
 exports.Users = class Users extends ServiceClass {
+  /* istanbul ignore next */
   setup (app) {
     app.on('login', this.onConnect.bind(this))
     app.on('disconnect', this.onDisconnect.bind(this))
@@ -31,11 +32,6 @@ exports.Users = class Users extends ServiceClass {
   onDisconnect (connection) {
     if (connection.user) {
       return this.setOffline(connection.user._id)
-        .catch(() => {
-          return false
-        })
-    } else {
-      return false
     }
   }
 }
