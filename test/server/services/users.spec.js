@@ -7,7 +7,7 @@ beforeAll(() => {
   fs.rmdirSync(app.get('homePath'), { recursive: true })
 })
 
-describe('\'interfaces\' service', () => {
+describe('\'Users\' service', () => {
   it('User to be created', async () => {
     const created = await app.service('/api/users').create({ _id: '123456' })
     expect(created).toHaveProperty('_id')

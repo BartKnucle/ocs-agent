@@ -9,6 +9,7 @@ exports.Files = class Files extends ServiceClass {
     this.remote = '/api/devicesdps'
   }
 
+  /* istanbul ignore next */
   setup (app) {
     app.service('/api/client').on('started', () => {
       super.setup(app)

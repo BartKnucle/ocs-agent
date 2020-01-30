@@ -1,6 +1,7 @@
 const ServiceClass = require('../service.class')
 
 exports.Logger = class Logger extends ServiceClass {
+  /* istanbul ignore next */
   setup (app) {
     app.log = this.log.bind(this)
     app.service('/api/setup').on('started', () => {
