@@ -1,11 +1,10 @@
-const fs = require('fs')
 const path = require('path')
 const testPath = path.join(require('os').homedir(), '.ocs-agent', 'test')
 const feathers = require('@feathersjs/feathers')
-const configuration = require('@feathersjs/configuration')
-const authentication = require('@/server/services/authentication/service')
 const socketio = require('@feathersjs/socketio')
 const express = require('@feathersjs/express')
+const configuration = require('@feathersjs/configuration')
+const authentication = require('@/server/services/authentication/service')
 
 //  fs.rmdirSync(path.join(require('os').homedir(), '.ocs-agent', 'test'), { recursive: true })
 

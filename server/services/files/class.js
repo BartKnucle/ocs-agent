@@ -36,6 +36,7 @@ exports.Files = class Files extends ServiceClass {
   }
 
   //  List of the dps have been updated
+  /* istanbul ignore next */
   updatedDps () {
     this.isDp()
       .then((dp) => {
@@ -46,6 +47,7 @@ exports.Files = class Files extends ServiceClass {
   }
 
   //  Check if the device is a distribution point
+  /* istanbul ignore next */
   isDp () {
     return this.listDps()
       .then((dps) => {
@@ -85,10 +87,12 @@ exports.Files = class Files extends ServiceClass {
       })
   }
 
+  /* istanbul ignore next */
   listDps () {
     return this.app.client.service(this.remote).find()
   }
 
+  /* istanbul ignore next */
   download (fileId) {
     this.listDps()
       .then((dps) => {
@@ -119,11 +123,13 @@ exports.Files = class Files extends ServiceClass {
       })
   }
 
+  /* istanbul ignore next */
   // Liste the remote files from the server
   listRemoteFiles () {
     return this.app.client.service('/api/files').find()
   }
 
+  /* istanbul ignore next */
   //  As DP download all files from another DP
   downloadAll () {
     this.listRemoteFiles()
