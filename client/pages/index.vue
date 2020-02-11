@@ -40,6 +40,16 @@ export default {
           }
         },
         {
+          value: 'status',
+          text: 'Status',
+          component: {
+            name: 'Label',
+            bindings: {
+              label: 'status'
+            }
+          }
+        },
+        {
           value: 'installed',
           text: 'Installed',
           component: {

@@ -33,71 +33,73 @@ exports.Applications = class Applications extends ServiceClass {
   }
 
   // Process a software installation
-  install (id) {
-    // Get the software informations
-    if (!this.detect(id)) {
-      if (!this.inCache(id)) {
-        // Process the download
-        this.download(id)
-        // Install the software
-        this.extract(id)
-      }
-
-      this.get(id).then((application) => {
-        //  Install software
-        this.patch(id, { status: 'Running command' })
-        switch (application.install_type) {
-          case 'powershell':
-            this.execPS(application.install_command)
-            break
-          case 'cmd':
-            this.execCMD(application.install_command)
-            break
-          default:
-            break
-        }
-      })
-        .catch((err) => {
-          return err
+  install (app) {
+    // Download ths package
+    
+    this.download(app)
+    .then(() => {
+      this.extract(app)
+        .then(() => {
+          this.detect(app)
+            .then((result) => {
+              if (result !== 'Installed') {
+                this.execPS(app, 'install.ps1')
+              }
+            })
         })
-    }
+    })
   }
 
   // Check if the application is in cache
   inCache (id) {}
 
   // Download file from distribution point
-  download (id) {
-    this.patch(id, { status: 'Downloading' })
+  download (app) {
+    return this.patch(app._id, { status: 'Downloading' })
+    .then(() => {
+      return this.app.service('/api/files').download(app.file)
+        .then(() => {
+          return this.patch(app._id, { status: 'Downloaded' })
+        })
+    })
   }
 
   // Extract the archive and remove it
-  extract (id) {
-    this.patch(id, { status: 'Extracting' })
+  extract (app) {
+    return this.patch(app._id, { status: 'Extracting' })
+    .then(() => {
+      return this.app.service('/api/files').extract(app.file)
+      .then(()=> {
+        return this.patch(app._id, { status: 'Extracted' })
+      })
+    })
   }
 
-  async detect (id) {
-    this.patch(id, { status: 'Detecting' })
-    const application = await this.get(id)
-    switch (application.detect_type) {
-      case 'powershell':
-        return this.execPS(id, application.detect_command)
-      case 'cmd':
-        return this.execCMD(id, application.detect_command)
-    }
+  detect (app) {
+    return this.patch(app._id, { status: 'Detecting' })
+      .then(() => {
+        switch (app.type) {
+          case 'Powershell':
+            return this.execPS(app, 'detect.ps1')
+          case 'cmd':
+            return this.execCMD(app, 'detect.cmd')
+        }
+      })
   }
 
   // Detect if a software is present
-  execPS (id, command) {
+  execPS (app, command) {
     const ps = new Shell({
       executionPolicy: 'Bypass',
       noProfile: true
     })
 
-    ps.addCommand('./server/data/cache/applications/' + id + '/' + command)
-    ps.invoke()
+    const scriptPath = path.join(this.app.get('homePath'), '/files/cache/', app.file, command)
+    ps.addCommand(scriptPath)
+    return ps.invoke()
       .then((output) => {
         ps.dispose()
+        return output
       })
       .catch((err) => {
         ps.dispose()

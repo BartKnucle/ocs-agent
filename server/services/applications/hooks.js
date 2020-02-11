@@ -2,9 +2,7 @@ const dataChanged = require('../../hooks/dataChanged')
 
 const install = (options = {}) => {
   return (context) => {
-    if (context.data.status === 'Installing') {
-      context.service.install(context.id)
-    }
+    context.service.install(context.data)
     return context
   }
 }
@@ -14,9 +12,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [install()],
-    update: [install(), dataChanged()],
-    patch: [install(), dataChanged()],
+    create: [],
+    update: [dataChanged()],
+    patch: [dataChanged()],
     remove: []
   },
 
@@ -24,7 +22,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [install()],
     update: [],
     patch: [],
     remove: []
