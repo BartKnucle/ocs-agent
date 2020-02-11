@@ -34,8 +34,6 @@ exports.Applications = class Applications extends ServiceClass {
 
   // Process a software installation
   install (app) {
-    // Download ths package
-    
     this.download(app)
     .then(() => {
       this.extract(app)
@@ -44,6 +42,9 @@ exports.Applications = class Applications extends ServiceClass {
             .then((result) => {
               if (result !== 'Installed') {
                 this.execPS(app, 'install.ps1')
+                  .then(() => {
+                    this.patch(app._id, { status: 'Installed' })
+                  })
               }
             })
         })
