@@ -6,6 +6,12 @@
       :buttons="buttons"
       @componentEvent="onEvent"
     />
+    <!-- <DataTable
+      :items="componentItems"
+      :headers="headers"
+      :buttons="buttons"
+      @componentEvent="onEvent"
+    /> -->
   </section>
 </template>
 <script>
@@ -18,7 +24,7 @@ export default {
   },
   data () {
     return {
-      buttons: [
+      /*  buttons: [
         {
           label: 'add',
           color: 'green'
@@ -27,7 +33,7 @@ export default {
           label: 'filter',
           color: 'yellow'
         }
-      ],
+      ], */
       headers: [
         {
           value: 'name',
