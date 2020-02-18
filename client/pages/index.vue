@@ -66,10 +66,16 @@ export default {
     ...mapGetters('applications', { applications: 'find', get: 'get' }),
     componentItems () {
       return this.applications().data.map((item) => {
-        if (item.installed) {
-          item = { ...item, btnLabel: 'Remove' }
-        } else {
-          item = { ...item, btnLabel: 'Install' }
+        switch (item.status) {
+          case 'Installed':
+            item = { ...item, btnLabel: 'Remove' }
+            break
+          case 'Not Installed':
+            item = { ...item, btnLabel: 'Install' }
+            break
+          default:
+            item = { ...item, btnLabel: 'Install' }
+            break
         }
         return item
       })
@@ -79,9 +85,19 @@ export default {
     this.findApplications()
   },
   methods: {
-    ...mapActions('applications', { findApplications: 'find' }),
+    ...mapActions('applications', { findApplications: 'find', patchApplication: 'patch' }),
     onEvent (event) {
-      // console.log(this.items)
+      switch (event.item.status) {
+        case 'Installed':
+          this.patchApplication([event.item._id, { status: 'Removing' }])
+          break
+        case 'Not installed':
+          this.patchApplication([event.item._id, { status: 'Installing' }])
+          break
+        default:
+          this.patchApplication([event.item._id, { status: 'Installing' }])
+          break
+      }
     }
   }
 }

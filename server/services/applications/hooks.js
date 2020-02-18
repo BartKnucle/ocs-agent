@@ -1,8 +1,17 @@
 const dataChanged = require('../../hooks/dataChanged')
 
-const install = (options = {}) => {
+const checkInstallation = (options = {}) => {
   return (context) => {
-    context.service.install(context.data)
+    switch (context.result.status) {
+      case 'Installing':
+          context.service.install(context.result)
+        break;
+      case 'Removing':
+          context.service.unInstall(context.result)
+        break;
+      default:
+        break;
+    }
     return context
   }
 }
@@ -22,9 +31,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [install()],
-    update: [],
-    patch: [],
+    create: [checkInstallation()],
+    update: [checkInstallation()],
+    patch: [checkInstallation()],
     remove: []
   },
 

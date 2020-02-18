@@ -51,6 +51,25 @@ exports.Applications = class Applications extends ServiceClass {
     })
   }
 
+  //  Uninstall a software
+  unInstall (app) {
+    this.download(app)
+    .then(() => {
+      this.extract(app)
+        .then(() => {
+          this.detect(app)
+            .then((result) => {
+              if (result === 'Installed') {
+                this.execPS(app, 'remove.ps1')
+                  .then(() => {
+                    this.patch(app._id, { status: 'Not installed' })
+                  })
+              }
+            })
+        })
+    })
+  }
+
   // Check if the application is in cache
   inCache (id) {}
 
