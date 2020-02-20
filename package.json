@@ -6,17 +6,19 @@
   "private": true,
   "main": "index.js",
   "build": {
-    "appId": "ocs-client.id",
+    "appId": "ocm-agent",
+    "productName": "ocm-agent",
     "mac": {
       "category": "configuration.managment.client"
     },
     "directories": {
-      "buildResources": "pack",
-      "output": "pack"
+      "buildResources": "build",
+      "output": "dist"
     },
     "nsis": {
       "oneClick": false,
-      "perMachine": true
+      "perMachine": true,
+      "uninstallDisplayName": "ocm-agent"
     },
     "extraFiles": [
       "client",
@@ -31,7 +33,7 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
-    "pack": "electron-builder --dir",
+    "pack": "electron-builder",
     "dist": "nuxt build && electron-builder"
   },
   "dependencies": {

@@ -3,6 +3,8 @@
     <v-btn
       v-bind="bind"
       @click="sendEvent($event, item)"
+      small
+      rounded
     >
       <v-icon>{{ getValue('btnIcon') }}</v-icon>
       {{ getValue('label') }}

@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron')
-const iconpath = './client/static/v.png'
+const iconpath = './client/static/icon.png'
 
 let window
 let tray
@@ -39,8 +39,8 @@ const createWindow = async () => {
     height: 768,
     frame: true,
     resizable: false,
-    icon: iconpath,
-    enableRemoteModule: true
+    //  enableRemoteModule: true,
+    icon: iconpath
   })
 
   window.setMenu(null)
@@ -63,7 +63,7 @@ const createWindow = async () => {
   })
 
   /* Si vous décommentez cette ligne, vous verrez la console de débug Chrome */
-  window.webContents.openDevTools()
+  //  window.webContents.openDevTools()
 
   /* Display the homepage of the server */
   window.loadURL('https://127.0.0.1:3000')

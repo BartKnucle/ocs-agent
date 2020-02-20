@@ -4,7 +4,6 @@
       :headers="headers"
       :items="items"
       :search="search"
-      show-group-by
       dense
     >
       <template
