@@ -4,13 +4,13 @@ const checkInstallation = (options = {}) => {
   return (context) => {
     switch (context.result.status) {
       case 'Installing':
-          context.service.install(context.result)
-        break;
+        context.service.install(context.result)
+        break
       case 'Removing':
-          context.service.unInstall(context.result)
-        break;
+        context.service.unInstall(context.result)
+        break
       default:
-        break;
+        break
     }
     return context
   }

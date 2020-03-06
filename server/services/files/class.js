@@ -113,19 +113,19 @@ exports.Files = class Files extends ServiceClass {
             //  const len = parseInt(response.headers['content-length'], 10)
             //  const total = len / 1048576 //  1048576 - bytes in  1Megabyte
             //  let cur = 0
-  
+
             response.on('data', (chunk) => {
               //  cur += chunk.length
               //  console.log('Downloading ' + (100.0 * cur / len).toFixed(2) + '% ' + (cur / 1048576).toFixed(2) + ' Total size: ' + total.toFixed(2) + ' mb')
             })
-  
+
             response.on('end', () => {
               resolve()
               //  console.log('Downloading complete')
             })
-  
+
             response.on('error', (e) => {
-              reject()
+              reject(e)
               //  console.log('Error: ' + e.message)
             })
           })
@@ -138,9 +138,9 @@ exports.Files = class Files extends ServiceClass {
     const localFile = path.join(this.app.get('homePath'), '/files/', fileId)
     const localFolder = path.join(this.app.get('homePath'), '/files/cache/', fileId)
     return new Promise((resolve, reject) => {
-      extract(localFile, {dir: localFolder}, (err) => {
+      extract(localFile, { dir: localFolder }, (err) => {
         if (err) {
-          reject()
+          reject(err)
         }
         resolve()
       })

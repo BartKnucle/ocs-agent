@@ -35,39 +35,39 @@ exports.Applications = class Applications extends ServiceClass {
   // Process a software installation
   install (app) {
     this.download(app)
-    .then(() => {
-      this.extract(app)
-        .then(() => {
-          this.detect(app)
-            .then((result) => {
-              if (result !== 'Installed') {
-                this.execPS(app, 'install.ps1')
-                  .then(() => {
-                    this.patch(app._id, { status: 'Installed' })
-                  })
-              }
-            })
-        })
-    })
+      .then(() => {
+        this.extract(app)
+          .then(() => {
+            this.detect(app)
+              .then((result) => {
+                if (result !== 'Installed') {
+                  this.execPS(app, 'install.ps1')
+                    .then(() => {
+                      this.patch(app._id, { status: 'Installed' })
+                    })
+                }
+              })
+          })
+      })
   }
 
   //  Uninstall a software
   unInstall (app) {
     this.download(app)
-    .then(() => {
-      this.extract(app)
-        .then(() => {
-          this.detect(app)
-            .then((result) => {
-              if (result === 'Installed') {
-                this.execPS(app, 'remove.ps1')
-                  .then(() => {
-                    this.patch(app._id, { status: 'Not installed' })
-                  })
-              }
-            })
-        })
-    })
+      .then(() => {
+        this.extract(app)
+          .then(() => {
+            this.detect(app)
+              .then((result) => {
+                if (result === 'Installed') {
+                  this.execPS(app, 'remove.ps1')
+                    .then(() => {
+                      this.patch(app._id, { status: 'Not installed' })
+                    })
+                }
+              })
+          })
+      })
   }
 
   // Check if the application is in cache
@@ -76,23 +76,23 @@ exports.Applications = class Applications extends ServiceClass {
   // Download file from distribution point
   download (app) {
     return this.patch(app._id, { status: 'Downloading' })
-    .then(() => {
-      return this.app.service('/api/files').download(app.file)
-        .then(() => {
-          return this.patch(app._id, { status: 'Downloaded' })
-        })
-    })
+      .then(() => {
+        return this.app.service('/api/files').download(app.file)
+          .then(() => {
+            return this.patch(app._id, { status: 'Downloaded' })
+          })
+      })
   }
 
   // Extract the archive and remove it
   extract (app) {
     return this.patch(app._id, { status: 'Extracting' })
-    .then(() => {
-      return this.app.service('/api/files').extract(app.file)
-      .then(()=> {
-        return this.patch(app._id, { status: 'Extracted' })
+      .then(() => {
+        return this.app.service('/api/files').extract(app.file)
+          .then(() => {
+            return this.patch(app._id, { status: 'Extracted' })
+          })
       })
-    })
   }
 
   detect (app) {
